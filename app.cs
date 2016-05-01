@@ -6,10 +6,34 @@ namespace customerapp
 {
     public class App : Application
     {
+        static NavigationPage NavPage;
+
+        public static bool IsLoggedIn { 
+           get { 
+//                if (User != null)
+//                    return !string.IsNullOrWhiteSpace (User.Email);
+//                else
+//                    return false;
+                return false;
+            } 
+        }
+
+        public static Action SuccessfulLoginAction {
+            get {
+                return new Action (() => { 
+//                    NavPage.Navigation.PopModalAsync ();                    
+//
+//                    if (IsLoggedIn) {
+//                        NavPage.Navigation.PushAsync(new MainPage());
+//                    }
+                });
+            }
+        }
+
         public App()
         {
             // The root page of your application
-            MainPage = new NavigationPage (new MainPage());
+            MainPage = NavPage = new NavigationPage (new AuthenticationPage());
         }
 
         protected override void OnStart()

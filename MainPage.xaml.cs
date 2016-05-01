@@ -3,6 +3,8 @@ using System.Collections.Generic;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using Xamarin.Auth;
+using System.Diagnostics;
 
 namespace customerapp
 {
@@ -11,6 +13,7 @@ namespace customerapp
         public MainPage () 
         {
             InitializeComponent();
+
         }
 
         async void OnShowOrdersClick(object sender, EventArgs args) {
