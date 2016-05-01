@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using Xamarin.Forms;
 using System.Collections.ObjectModel;
 
-namespace customerapp
+namespace customerapp.Dto
 {
-    class Product
+    public class Product
     {
         public String Name{ get; set; }
 

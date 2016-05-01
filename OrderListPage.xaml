@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage
+	xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	x:Class="customerapp.OrderListPage">
+	<ListView
+		x:Name="OrderListView">
+		<ListView.ItemTemplate>
+			<DataTemplate>
+				<ViewCell>
+					<StackLayout
+						Orientation="Vertical">
+						<StackLayout
+							Orientation="Horizontal"
+							Padding="10">
+							<Label
+								Text="{Binding Product.Name}" 
+								HorizontalOptions="FillAndExpand"/>
+							<Label
+								Text="{Binding OrderTime}"
+								HorizontalOptions="End" />
+						</StackLayout>
+					</StackLayout>
+				</ViewCell>
+			</DataTemplate>
+		</ListView.ItemTemplate>
+	</ListView>
+</ContentPage>

@@ -13,7 +13,8 @@ namespace customerapp
             InitializeComponent();
         }
 
-        void OnShowOrdersClick(object sender, EventArgs args) {
+        async void OnShowOrdersClick(object sender, EventArgs args) {
+            await Navigation.PushAsync(new OrderListPage());
         }
 
         async void OnShowProductButtonClick(object sender, EventArgs args) {
