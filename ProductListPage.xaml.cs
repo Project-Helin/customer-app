@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 using Xamarin.Forms;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 
 namespace customerapp
 {
@@ -21,6 +22,17 @@ namespace customerapp
             products.Add(new Product { Name = "Snickers", Price = 1.50 });
             
             ProductListView.ItemsSource = products;
+
+            ProductListView.ItemSelected += ProductSelected;
+        }
+
+        async void ProductSelected (object sender, SelectedItemChangedEventArgs e)
+        {
+            Product selectedProduct = e.SelectedItem as Product;
+
+            var answer = await DisplayAlert ("Produkt Bestellen?", "Möchten Sie wirklich ein" + selectedProduct.Name + "bestellen?", "Ja", "Nein");
+            Debug.WriteLine ("Answer: " + answer);
+
         }
     }
 }
