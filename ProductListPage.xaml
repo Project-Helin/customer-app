@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage
+	xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	x:Class="customerapp.ProductListPage"
+	Title="Project Helin"
+	Padding="10, 40, 10, 10">
+	<StackLayout>
+		<StackLayout>
+			<Label
+				x:Name="title"
+				Text="Welcome to Project Helin"
+				FontSize="Large"
+				HorizontalOptions="Center"
+				VerticalOptions="FillAndExpand" />
+			<Label
+				x:Name="description"
+				Text="The future of drones"
+				FontSize="Small"
+				HorizontalOptions="Center"
+				VerticalOptions="FillAndExpand" />
+		</StackLayout>
+		<StackLayout
+			VerticalOptions="FillAndExpand">
+		</StackLayout>
+		<StackLayout>
+			<Button
+				Text="Show available products"
+				HorizontalOptions="Center"
+				VerticalOptions="CenterAndExpand"
+				Clicked="OnShowProductButtonClick" />
+			<Button
+				Text="Show my orders"
+				HorizontalOptions="Center"
+				VerticalOptions="CenterAndExpand"
+				Clicked="OnShowOrdersClick" />
+		</StackLayout>
+	</StackLayout>
+</ContentPage>
