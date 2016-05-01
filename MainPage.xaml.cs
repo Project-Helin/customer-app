@@ -6,9 +6,9 @@ using Xamarin.Forms.Xaml;
 
 namespace customerapp
 {
-    public partial class ProductListPage : ContentPage
+    public partial class MainPage : ContentPage
     {
-        public ProductListPage () 
+        public MainPage () 
         {
             InitializeComponent();
         }
@@ -16,8 +16,10 @@ namespace customerapp
         void OnShowOrdersClick(object sender, EventArgs args) {
         }
 
-        void OnShowProductButtonClick(object sender, EventArgs args) {
+        async void OnShowProductButtonClick(object sender, EventArgs args) {
+            await Navigation.PushAsync(new ProductListPage());
         }
+
 
 
  
