@@ -8,32 +8,38 @@ namespace customerapp
     {
         static NavigationPage NavPage;
 
-        public static bool IsLoggedIn { 
-           get { 
-//                if (User != null)
-//                    return !string.IsNullOrWhiteSpace (User.Email);
-//                else
-//                    return false;
-                return false;
+        public static Customer Customer { get; set; }
+
+        public static bool IsLoggedIn
+        { 
+            get
+            { 
+                if (Customer != null)
+                    return !string.IsNullOrWhiteSpace(Customer.Email);
+                else
+                    return false;
             } 
         }
 
-        public static Action SuccessfulLoginAction {
-            get {
-                return new Action (() => { 
-//                    NavPage.Navigation.PopModalAsync ();                    
-//
-//                    if (IsLoggedIn) {
-//                        NavPage.Navigation.PushAsync(new MainPage());
-//                    }
-                });
+        public static Action SuccessfulLoginAction
+        {
+            get
+            {
+                return new Action(() =>
+                    { 
+                        if (IsLoggedIn)
+                        {
+                            NavPage.Navigation.PopModalAsync();    
+                        }
+                    });
             }
         }
 
         public App()
         {
             // The root page of your application
-            MainPage = NavPage = new NavigationPage (new AuthenticationPage());
+            MainPage = NavPage = new NavigationPage(new MainPage());
+            NavPage.Navigation.PushModalAsync(new AuthenticationPage());
         }
 
         protected override void OnStart()

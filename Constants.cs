@@ -16,6 +16,6 @@ namespace customerapp
         public static string UserInfoUrl = "https://www.googleapis.com/oauth2/v2/userinfo";
 
         // Set this property to the location the user will be redirected too after successfully authenticating
-        public static string RedirectUrl = "http://blank.org/";
+        public static string RedirectUrl = "https://blank.org/";
     }
 }
