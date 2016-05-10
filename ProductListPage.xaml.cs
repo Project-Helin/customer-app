@@ -52,7 +52,7 @@ namespace customerapp
             if (orderConfirmed)
             {
         
-                var result = await CrossPayPalManager.Current.Buy(new PayPalItem("Order 123", new Decimal(12.55), "CHF"), new Decimal(0));
+                var result = await CrossPayPalManager.Current.Buy(new PayPalItem("Order 123", (Decimal) orderSum, "CHF"), new Decimal(0));
                 if (result.Status == PayPalStatus.Cancelled)
                 {
                     Debug.WriteLine("Cancelled");
