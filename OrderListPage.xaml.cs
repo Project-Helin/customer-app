@@ -13,9 +13,9 @@ namespace customerapp
 
         public OrderListPage()
         {
-            var product1 = new Product { Name = "Coca Cola 0.5 L", Price = 4.0 };
-            var product2 = new Product { Name = "Fanta Orange 0.5 L", Price = 4.0 };
-            var product3 = new Product { Name = "Rivella Rot 0.5 L", Price = 4.0 };
+            var product1 = new Product { Name = "Coca Cola 0.5 L", Price = 4.0m };
+            var product2 = new Product { Name = "Fanta Orange 0.5 L", Price = 4.0m };
+            var product3 = new Product { Name = "Rivella Rot 0.5 L", Price = 4.0m };
 
             orders.Add(new Order{ Product = product1, OrderTime = DateTime.Now.AddMonths(-4) });
             orders.Add(new Order{ Product = product2, OrderTime = DateTime.Now.AddMonths(-1) });

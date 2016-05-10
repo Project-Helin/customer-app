@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+	<style name="HelinTheme" parent="HelinTheme.Base">
+	</style>
+
+	<style name="HelinTheme.Base" parent="Theme.AppCompat.Light.DarkActionBar">
+	  	<item name="windowNoTitle">true</item>
+		<item name="colorPrimary">@color/helintheme_color</item>
+		<item name="colorPrimaryDark">@color/helintheme_color_dark</item>
+		<item name="colorAccent">@color/helintheme_color_dark</item>
+		<item name="colorButtonNormal">@color/button_color</item>
+	</style>
+</resources>

@@ -39,7 +39,8 @@ namespace customerapp
         {
             // The root page of your application
             MainPage = NavPage = new NavigationPage(new MainPage());
-            NavPage.Navigation.PushModalAsync(new AuthenticationPage());
+            //User shouldnt to have to login in order to see Products
+            //NavPage.Navigation.PushModalAsync(new AuthenticationPage());
         }
 
         protected override void OnStart()

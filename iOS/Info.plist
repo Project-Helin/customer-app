@@ -44,5 +44,11 @@
 	<string>Wir verwenden ihre Position um eine Lieferung an diese zu ermöglichen</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Wir benutzen ihre Position gerade</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>com.paypal.ppclient.touch.v1</string>
+		<string>com.paypal.ppclient.touch.v2</string>
+		<string>org-appextension-feature-password-management</string>
+	</array>
 </dict>
 </plist>

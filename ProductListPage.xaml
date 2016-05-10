@@ -3,29 +3,40 @@
 	xmlns="http://xamarin.com/schemas/2014/forms"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 	x:Class="customerapp.ProductListPage">
-	<ListView
-		x:Name="ProductListView">
-		<ListView.ItemTemplate>
-			<DataTemplate>
-				<ViewCell>
-					<StackLayout
-						Orientation="Vertical">
+	<StackLayout>
+		<ListView
+			x:Name="ProductListView">
+			<ListView.ItemTemplate>
+				<DataTemplate>
+					<ViewCell>
 						<StackLayout
-							Orientation="Horizontal"
-							Padding="10">
-							<Label
-								Text="{Binding Name}" 
-								HorizontalOptions="FillAndExpand"/>
-							<Label
-								Text="{Binding Price}"
-								HorizontalOptions="End" />
-							<Label
-								Text="CHF"
-								HorizontalOptions="End" />
+							Orientation="Vertical">
+							<StackLayout
+								Orientation="Horizontal"
+								Padding="10">
+								<Label
+									Text="{Binding Name}"
+									HorizontalOptions="FillAndExpand" />
+								<Label
+									Text="{Binding Price}"
+									HorizontalOptions="End" />
+								<Label
+									Text="CHF"
+									HorizontalOptions="End" />
+								<Label
+									FontSize="Medium"
+									TextColor="Blue"
+									Text="{Binding Amount}" />
+							</StackLayout>
 						</StackLayout>
-					</StackLayout>
-				</ViewCell>
-			</DataTemplate>
-		</ListView.ItemTemplate>
-	</ListView>
+					</ViewCell>
+				</DataTemplate>
+			</ListView.ItemTemplate>
+		</ListView>
+		<Button
+			Text="Jetzt Bestellen"
+			HorizontalOptions="Center"
+			VerticalOptions="CenterAndExpand"
+			Clicked="OnOrderButtonClick" />
+	</StackLayout>
 </ContentPage>
