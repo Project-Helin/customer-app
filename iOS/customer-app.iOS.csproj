@@ -9,6 +9,8 @@
     <RootNamespace>customerapp.iOS</RootNamespace>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
     <AssemblyName>customer-app.iOS</AssemblyName>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
     <DebugSymbols>true</DebugSymbols>
@@ -104,24 +106,21 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\portable-net40+sl5+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="Xamarin">
-      <HintPath>..\packages\PayPal.Forms.2.0.2\lib\Xamarin.iOS10\Xamarin.PayPal.iOS.dll</HintPath>
-    </Reference>
     <Reference Include="PayPal.Forms">
       <HintPath>..\packages\PayPal.Forms.2.0.2\lib\Xamarin.iOS10\PayPal.Forms.dll</HintPath>
-    </Reference>
-    <Reference Include="Xamarin.PayPal">
-      <HintPath>..\packages\PayPal.Forms.2.0.2\lib\Xamarin.iOS10\Xamarin.PayPal.iOS.dll</HintPath>
     </Reference>
     <Reference Include="PayPal.Forms.Abstractions">
       <HintPath>..\packages\PayPal.Forms.2.0.2\lib\Xamarin.iOS10\PayPal.Forms.Abstractions.dll</HintPath>
     </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\customer-app.csproj">
-      <Project>{A7C53509-AE97-4EFE-9D3A-421FB9940BAD}</Project>
-      <Name>customer-app</Name>
-    </ProjectReference>
+    <Reference Include="Xamarin.PayPal.iOS">
+      <HintPath>..\packages\PayPal.Forms.2.0.2\lib\Xamarin.iOS10\Xamarin.PayPal.iOS.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Primitives">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.29\lib\Xamarin.iOS10\System.Net.Http.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Extensions">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.29\lib\Xamarin.iOS10\System.Net.Http.Extensions.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\Contents.json" />

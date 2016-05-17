@@ -17,11 +17,14 @@ namespace customerapp.Dto
             }
         }
 
+
         public String Name{ get; set; }
 
         public decimal Price { get; set; }
 
-        int amount;
+		private String ProjectId { get; set; }
+
+		int amount;
 
         public int Amount { 
             get {return amount;} 

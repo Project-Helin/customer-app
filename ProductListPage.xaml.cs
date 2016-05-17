@@ -9,6 +9,9 @@ using System.Linq;
 using PayPal.Forms;
 using PayPal.Forms.Abstractions;
 using PayPal.Forms.Abstractions.Enum;
+using System.Net.Http;
+using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace customerapp
 {
@@ -20,19 +23,43 @@ namespace customerapp
         public ProductListPage()
         {
             InitializeComponent();
-
-            products.Add(new Product { Name = "Coca Cola 0.5 L", Price = 4.0m });
-            products.Add(new Product { Name = "Fanta Orange 0.5 L", Price = 4.0m });
-            products.Add(new Product { Name = "Rivella Rot 0.5 L", Price = 4.0m });
-            products.Add(new Product { Name = "Drone Selfie", Price = 2.0m });
-            products.Add(new Product { Name = "Snickers", Price = 1.50m });
-            
-            ProductListView.ItemsSource = products;
-
-            ProductListView.ItemTapped += ProductTapped;
         }
 
-        void ProductTapped(object sender, ItemTappedEventArgs e)
+		protected async override void OnAppearing(){
+			base.OnAppearing ();
+			var products2 = await FetchProduct();
+			foreach (Product b in products2) {
+				products.Add (b);
+			}
+				
+			ProductListView.ItemsSource = products;
+			ProductListView.ItemTapped += ProductTapped;
+		}
+
+		public async Task<List<Product>> FetchProduct()
+		{
+			var client = new HttpClient ();
+			using (client) {
+
+				Debug.WriteLine ("Fetch order ");
+				// TODO we need a common place for this
+				var uri = new Uri ("http://192.168.222.1:9000/api/products/");
+				var response = await client.GetAsync (uri);
+				List<Product> items = new List<Product>();
+
+				if (response.IsSuccessStatusCode) {
+					var content = await response.Content.ReadAsStringAsync ();
+					items = Newtonsoft.Json.JsonConvert.DeserializeObject <List<Product>> (content);
+				} else {
+					Debug.WriteLine ("Failed to get all order with status code " + response.StatusCode);
+				}
+			
+				return items;
+			}
+		}
+
+
+		void ProductTapped(object sender, ItemTappedEventArgs e)
         {
             Product selectedProduct = e.Item as Product;
 
@@ -69,10 +96,7 @@ namespace customerapp
             }
           
         }
-
-     
-
-    
+		    
     }
 }
 
