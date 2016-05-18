@@ -9,7 +9,7 @@ namespace customerapp
 
 		public String orderId { get; set; }
 
-
+		public Route Route { get; set; }
 
 	}
 }

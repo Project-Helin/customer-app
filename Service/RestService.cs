@@ -55,9 +55,9 @@ namespace customerapp
 			var locator = CrossGeolocator.Current;
 
 
-			var t = await locator.GetPositionAsync (timeoutMilliseconds: 10000);
+			var t = await locator.GetPositionAsync (timeoutMilliseconds: 1000000);
 			p.Lat= t.Latitude;
-			p.Lon = t.Latitude;				
+			p.Lon = t.Longitude;				
 			return p;
 		}
 
@@ -73,7 +73,7 @@ namespace customerapp
 				displayName = "Batman",
 				email = "batman@wayneenterprise.com",
 				customerPosition = pos,
-				projectId = "c2d05aad-864a-43ed-9fa1-87f9deb90642",
+				projectId = "68fbcb31-e936-405e-9992-6989668f47df",
 				orderProducts = orderProducts
 			};
 
@@ -85,7 +85,8 @@ namespace customerapp
 			if (response.IsSuccessStatusCode) {
 				var content = await response.Content.ReadAsStringAsync();
 
-				OrderApiOutput output = Newtonsoft.Json.JsonConvert.DeserializeObject <OrderApiOutput> (content); 
+				Debug.WriteLine (content);
+				OrderApiOutput output = Newtonsoft.Json.JsonConvert.DeserializeObject <OrderApiOutput> (content, jsonSetting); 
 				return output;
 			} else {
 				Debug.WriteLine ("Failed to create order with status code " + response.StatusCode);

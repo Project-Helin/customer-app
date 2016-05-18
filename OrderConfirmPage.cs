@@ -10,23 +10,47 @@ namespace customerapp
     {
 		public OrderConfirmPage(OrderApiOutput orderApiOutput)
         {
-            var map = new Map(
-        	    MapSpan.FromCenterAndRadius(
-					new Xamarin.Forms.Maps.Position(
-						orderApiOutput.DeliveryPosition.Lat, 
-						orderApiOutput.DeliveryPosition.Lon
-					), 
-					Distance.FromMiles(0.3)
-				)
-			)
-            {
+			var map = new MapWithRoute(){
                 IsShowingUser = true,
                 HeightRequest = 100,
                 WidthRequest = 960,
                 VerticalOptions = LayoutOptions.FillAndExpand
             };
+
+
+			var position = new Xamarin.Forms.Maps.Position(
+				orderApiOutput.DeliveryPosition.Lat, 
+				orderApiOutput.DeliveryPosition.Lon
+			);
+
+			foreach (var b in orderApiOutput.Route.WayPoints){
+				map.RouteCoordinates.Add (b.Position);	
+			}
+
+
+			var pin = new Pin {
+				Type = PinType.Generic,
+				Position = position,
+				Label = "Drop position",
+				Address = "Expected drop position for your delivery"
+			};
+			map.Pins.Add(pin);
+			map.MoveToRegion(MapSpan.FromCenterAndRadius(position, Distance.FromMiles(0.3)));
+
+
+			Button button = new Button
+			{
+				Text = "Confirm Position",
+				Font = Font.SystemFontOfSize(NamedSize.Medium),
+				BorderWidth = 0,
+				HorizontalOptions = LayoutOptions.Center,
+				VerticalOptions = LayoutOptions.Center
+			};
+
+
             var stack = new StackLayout { Spacing = 0 };
             stack.Children.Add(map);
+			stack.Children.Add (button);
             Content = stack;
         }
     }
