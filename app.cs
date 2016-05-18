@@ -14,10 +14,13 @@ namespace customerapp
         { 
             get
             { 
-                if (Customer != null)
-                    return !string.IsNullOrWhiteSpace(Customer.Email);
-                else
-                    return false;
+				if (Customer != null) 
+				{
+					return !string.IsNullOrWhiteSpace (Customer.Email);
+				} else 
+				{
+					return false;
+				}
             } 
         }
 
