@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace customerapp.Dto
 {
@@ -7,6 +8,11 @@ namespace customerapp.Dto
         public Position DeliveryPosition{ get; set;}
         public DateTime OrderTime { get; set; }
         public Product Product { get; set; }
+
+		public List<Product> Products {
+			get;
+			set;
+		}
            
     }
 }
