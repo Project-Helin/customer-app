@@ -61,6 +61,18 @@ namespace customerapp
 			return p;
 		}
 
+		public async Task ConfirmOrder(String orderId){
+			var uri = new Uri (string.Format(Constants.ApiUrlConfirmtOrder, orderId));
+
+			var content = new StringContent ("", Encoding.UTF8);
+			HttpResponseMessage response = await client.PostAsync (uri, content);
+
+			if (!response.IsSuccessStatusCode) {
+				Debug.WriteLine ("Failed to create order with status code " + response.StatusCode);
+			}
+		
+		}
+
 		public async Task<OrderApiOutput> CreateOrder (ICollection<Product> orderProducts)
 		{
 			var uri = new Uri (Constants.ApiUrlListOrder);

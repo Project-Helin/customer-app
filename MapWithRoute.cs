@@ -8,11 +8,14 @@ namespace customerapp
 	{
 		public List<customerapp.Dto.Position> RouteCoordinates { get; set; }
 
-
 		public MapWithRoute ()
 		{
 			RouteCoordinates = new List<customerapp.Dto.Position> ();
 		}
+
+
+
+
 	}
 }
 

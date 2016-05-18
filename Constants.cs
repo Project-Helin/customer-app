@@ -18,9 +18,11 @@ namespace customerapp
         // Set this property to the location the user will be redirected too after successfully authenticating
         public static string RedirectUrl = "https://blank.org/";
 
-		// public static string ApiUrlListProducts = "http://192.168.222.1:9000/api/products/";
-		public static string ApiUrlListProducts = "http://152.96.236.113:9000/api/products/";
-		public static string ApiUrlListOrder = "http://152.96.236.113:9000/api/orders/";
+		public static string ApiUrlBase = "http://192.168.222.1:9000";
+		// public static string ApiUrlBase = "http://152.96.236.113;9000";
+		public static string ApiUrlListProducts = ApiUrlBase + "/api/products/";
+		public static string ApiUrlListOrder = ApiUrlBase + "/api/orders/";
+		public static string ApiUrlConfirmtOrder = ApiUrlBase + "/api/orders/{0}/confirm";
 
     }
 }
