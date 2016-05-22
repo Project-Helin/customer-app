@@ -34,7 +34,9 @@
 			</ListView.ItemTemplate>
 		</ListView>
 		<Button
-			Text="Jetzt Bestellen"
+		    x:Name="SendOrderButton"
+		    IsEnabled="false"
+			Text="Send order"
 			HorizontalOptions="Center"
 			VerticalOptions="CenterAndExpand"
 			Clicked="OnOrderButtonClick" />

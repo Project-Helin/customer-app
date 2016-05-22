@@ -32,7 +32,11 @@ namespace customerapp
 		protected async override void OnAppearing(){
 			base.OnAppearing ();
 
+			orderedProducts.Clear ();
 			products.Clear ();
+
+			Button button = this.FindByName<Button> ("SendOrderButton");
+			button.IsEnabled = false;
 
 			var productsFromServer = await restService.GetAllProducts();
 			foreach (Product each in productsFromServer) {
@@ -53,12 +57,18 @@ namespace customerapp
             }
 
             selectedProduct.Amount += 1;
+
+			if (selectedProduct.Amount > 0) {
+				Button button = this.FindByName<Button> ("SendOrderButton");
+				button.IsEnabled = true;
+			}
+
         }
 
         async void OnOrderButtonClick(object sender, EventArgs args)
         {
             var orderSum = orderedProducts.Sum((a) => a.Amount * a.Price);
-            var orderConfirmed = await DisplayAlert("Produkte Kaufen?", "Möchten Sie die Bestellung im Wert von " + orderSum + " CHF abschicken?", "Ja", "Nein");
+            var orderConfirmed = await DisplayAlert("Produkt Kaufen?", "Möchten Sie die Bestellung im Wert von " + orderSum + " CHF abschicken?", "Ja", "Nein");
 
             if (orderConfirmed)
             {
