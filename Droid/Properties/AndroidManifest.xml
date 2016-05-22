@@ -23,9 +23,14 @@
 	<application
 		android:label="project helin"
 		android:theme="@style/HelinTheme">
+<!--		<meta-data
+			android:name="com.google.android.geo.API_KEY"
+			android:value="AIzaSyAc0DiLABEAdGciJuQK3CbhUkae0-0nbWk" />-->
 		<meta-data
 			android:name="com.google.android.geo.API_KEY"
-			android:value="AIzaSyAc0DiLABEAdGciJuQK3CbhUkae0-0nbWk" />
+			android:value="AIzaSyAYolXpuGXy7LWoPX1EkxEtCQZEruoxhJM" />	
+
+
 		<meta-data
 			android:name="com.google.android.gms.version"
 			android:value="@integer/google_play_services_version" />
