@@ -24,7 +24,7 @@ namespace customerapp.Dto
 
         public decimal Price { get; set; }
 
-		private String ProjectId { get; set; }
+		public String ProjectId { get; set; }
 
 
 		int amount;

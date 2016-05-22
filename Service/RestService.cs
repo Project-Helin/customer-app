@@ -30,10 +30,18 @@ namespace customerapp
 
 		public async Task<List<Product>> GetAllProducts ()
 		{
-			
 			Debug.WriteLine ("Fetch order ");
-			
-			var uri = new Uri (Constants.ApiUrlListProducts);
+
+			var position = await GetPosition ();
+
+			string x = position.Lat.ToString();
+			string y = position.Lon.ToString();
+
+			// var uri = new Uri (String.Format(Constants.ApiUrlListProducts, x.Replace(',', '.'), y.Replace(',', '.')));
+			var uri = new Uri(Constants.ApiUrlListProductsAll);
+
+			Debug.WriteLine ("URI " + uri);
+
 			var response = await client.GetAsync (uri);
 			List<Product> items = new List<Product>();
 			
@@ -50,20 +58,23 @@ namespace customerapp
 
 		async Task<customerapp.Dto.Position> GetPosition ()
 		{
-			customerapp.Dto.Position p = new customerapp.Dto.Position ();
+			// TODO handle failure if position is not switched on 
 
+			Debug.WriteLine ("Try to get current position");
 			var locator = CrossGeolocator.Current;
+			var pos = await locator.GetPositionAsync (timeoutMilliseconds: 100000);
 
+			customerapp.Dto.Position p = new customerapp.Dto.Position ();
+			p.Lat= pos.Latitude;
+			p.Lon = pos.Longitude;				
 
-			var t = await locator.GetPositionAsync (timeoutMilliseconds: 1000000);
-			p.Lat= t.Latitude;
-			p.Lon = t.Longitude;				
+			Debug.WriteLine ("Got positoin");
 			return p;
 		}
 
 		public async Task ConfirmOrder(String orderId){
 			var uri = new Uri (string.Format(Constants.ApiUrlConfirmtOrder, orderId));
-
+			Debug.WriteLine ("URI " + uri);
 			var content = new StringContent ("", Encoding.UTF8);
 			HttpResponseMessage response = await client.PostAsync (uri, content);
 
@@ -76,16 +87,19 @@ namespace customerapp
 		public async Task<OrderApiOutput> CreateOrder (ICollection<Product> orderProducts)
 		{
 			var uri = new Uri (Constants.ApiUrlListOrder);
-
+			Debug.WriteLine ("URI " + uri);
 
 			var pos = await GetPosition();
 
+			var aa = orderProducts.GetEnumerator ();
+			aa.MoveNext ();
+			var first = aa.Current.ProjectId;
 
 			var v = new {
 				displayName = "Batman",
 				email = "batman@wayneenterprise.com",
 				customerPosition = pos,
-				projectId = "68fbcb31-e936-405e-9992-6989668f47df",
+				projectId = first,
 				orderProducts = orderProducts
 			};
 
