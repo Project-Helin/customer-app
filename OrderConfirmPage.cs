@@ -42,7 +42,7 @@ namespace customerapp
 				VerticalOptions = LayoutOptions.FillAndExpand
 			};
 
-
+			map.MapType = MapType.Satellite;
 			var position = new Xamarin.Forms.Maps.Position(
 				orderApiOutput.DeliveryPosition.Lat, 
 				orderApiOutput.DeliveryPosition.Lon
@@ -61,15 +61,16 @@ namespace customerapp
 			};
 
 			map.Pins.Add(pin);
-			map.MoveToRegion(MapSpan.FromCenterAndRadius(position, Distance.FromMiles(0.3)));
+			map.MoveToRegion(MapSpan.FromCenterAndRadius(position, Distance.FromMeters(100)));
+
 			return map;
 		}
 
-		void OnButtonClicked(object sender, EventArgs e)
+		async void OnButtonClicked(object sender, EventArgs e)
 		{
 			
 			RestService rest = new RestService ();
-			rest.ConfirmOrder (orderApiOutput.orderId);
+			await rest.ConfirmOrder (orderApiOutput.orderId);
 			// TODO change to another page 
 			var stack = new StackLayout { Spacing = 0 };
 			stack.Children.Add(createMap(orderApiOutput));
