@@ -18,11 +18,17 @@ namespace customerapp
 	{
 		HttpClient client;
 
+		/**
+		 * We need this custom setting, so that JSON is created with 
+		 * correct propertyName. Without this setting, json Name would be start 
+		 * with capital letter as in .Net Property. With this setting
+		 * all property names in json start with small letter.
+		 */
 		JsonSerializerSettings jsonSetting = new JsonSerializerSettings { 
 			ContractResolver = new CamelCasePropertyNamesContractResolver(),
 			NullValueHandling = NullValueHandling.Ignore // ignore null values
 		};
-
+				
 		public RestService ()
 		{
 			client = new HttpClient ();
@@ -37,9 +43,8 @@ namespace customerapp
 			string x = position.Lat.ToString();
 			string y = position.Lon.ToString();
 
-			// var uri = new Uri (String.Format(Constants.ApiUrlListProducts, x.Replace(',', '.'), y.Replace(',', '.')));
-			var uri = new Uri(Constants.ApiUrlListProductsAll);
-
+			// replace is needed to be sure, that double is written xx.zz not xx,zz
+			var uri = new Uri (String.Format(Constants.ApiUrlListProducts, x.Replace(',', '.'), y.Replace(',', '.')));
 			Debug.WriteLine ("URI " + uri);
 
 			var response = await client.GetAsync (uri);
