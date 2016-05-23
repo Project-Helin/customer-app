@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Xamarin.Forms;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 
 namespace customerapp.Dto
 {
@@ -17,15 +18,17 @@ namespace customerapp.Dto
             }
         }
 
-
 		public String id { get; set; }
 
-        public String Name{ get; set; }
+		private String abc;
+
+		public String Name{ get; set; }
 
         public decimal Price { get; set; }
 
 		public String ProjectId { get; set; }
 
+		public Organisation Organisation { get; set; }
 
 		int amount;
 
@@ -38,9 +41,6 @@ namespace customerapp.Dto
             
             } 
         }
-       
-            
-
     }
 
 }

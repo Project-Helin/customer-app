@@ -45,25 +45,32 @@ namespace customerapp
 
 		}
 
-
-
 		void ProductTapped(object sender, ItemTappedEventArgs e)
         {
             Product selectedProduct = e.Item as Product;
+			selectedProduct.Amount += 1;
 
-            if (!orderedProducts.Contains(selectedProduct))
+			var isNotAlreadyOrdered = !orderedProducts.Contains (selectedProduct);
+			if (isNotAlreadyOrdered)
             {
                 orderedProducts.Add(selectedProduct);
             }
-
-            selectedProduct.Amount += 1;
-
+				
 			if (selectedProduct.Amount > 0) {
 				Button button = this.FindByName<Button> ("SendOrderButton");
 				button.IsEnabled = true;
 			}
 
+			updateTotalAmount ();
+
+			// TODO: disable all products with different organisation
         }
+
+		void updateTotalAmount(){
+			var totalAmout = orderedProducts.Sum((a) => a.Amount * a.Price);
+			Label totalAmountLabel = this.FindByName<Label> ("TotalAmount");
+			totalAmountLabel.Text = "Total: " + totalAmout + " CHF";
+		}
 
         async void OnOrderButtonClick(object sender, EventArgs args)
         {

@@ -47,6 +47,7 @@ namespace customerapp
 			var uri = new Uri (String.Format(Constants.ApiUrlListProducts, x.Replace(',', '.'), y.Replace(',', '.')));
 			Debug.WriteLine ("URI " + uri);
 
+
 			var response = await client.GetAsync (uri);
 			List<Product> items = new List<Product>();
 			
@@ -94,21 +95,18 @@ namespace customerapp
 			var uri = new Uri (Constants.ApiUrlListOrder);
 			Debug.WriteLine ("URI " + uri);
 
-			var pos = await GetPosition();
+			var position = await GetPosition();
+			var projectId = getProjectId (orderProducts);
 
-			var aa = orderProducts.GetEnumerator ();
-			aa.MoveNext ();
-			var first = aa.Current.ProjectId;
-
-			var v = new {
+			var request = new {
 				displayName = "Batman",
 				email = "batman@wayneenterprise.com",
-				customerPosition = pos,
-				projectId = first,
+				customerPosition = position,
+				projectId = projectId,
 				orderProducts = orderProducts
 			};
 
-			var jsonToSend = JsonConvert.SerializeObject (v, jsonSetting);
+			var jsonToSend = JsonConvert.SerializeObject (request, jsonSetting);
 			var contentToSend = new StringContent (jsonToSend, Encoding.UTF8, "application/json");
 
 			HttpResponseMessage response = await client.PostAsync (uri, contentToSend);
@@ -124,6 +122,16 @@ namespace customerapp
 				return null;
 			}
 
+		}
+
+		String getProjectId(ICollection<Product> orderProducts){
+			/**
+			 * Since all products should be from the same project
+			 * we can get the project id from the first product
+			 */
+			var enumerator = orderProducts.GetEnumerator ();
+			enumerator.MoveNext ();
+			return enumerator.Current.ProjectId;
 		}
 
 	}

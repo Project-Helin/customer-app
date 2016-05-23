@@ -4,41 +4,48 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 	x:Class="customerapp.ProductListPage">
 	<StackLayout>
-		<ListView
-			x:Name="ProductListView">
+		<ListView x:Name="ProductListView" RowHeight="60" VerticalOptions="FillAndExpand">
 			<ListView.ItemTemplate>
-				<DataTemplate>
+				<DataTemplate >
 					<ViewCell>
 						<StackLayout
-							Orientation="Vertical">
-							<StackLayout
-								Orientation="Horizontal"
-								Padding="10">
-								<Label
-									Text="{Binding Name}"
-									HorizontalOptions="FillAndExpand" />
-								<Label
-									Text="{Binding Price}"
-									HorizontalOptions="End" />
-								<Label
-									Text="CHF"
-									HorizontalOptions="End" />
-								<Label
-									FontSize="Medium"
-									TextColor="Blue"
-									Text="{Binding Amount}" />
+							Orientation="Horizontal"
+							Padding="10">
+							<StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand">
+								<Label Text="{Binding Name}"/>
+								<Label FontSize="Small"	Text="{Binding Organisation.Name}" TextColor="Gray"/>
 							</StackLayout>
+
+							<Label
+								Text="{Binding Price}"
+								HorizontalOptions="End" />
+							<Label
+								Text="CHF"
+								HorizontalOptions="End" />
+							<Label
+								FontSize="Medium"
+								TextColor="Blue"
+								Text="{Binding Amount}" />
 						</StackLayout>
 					</ViewCell>
 				</DataTemplate>
 			</ListView.ItemTemplate>
 		</ListView>
-		<Button
-		    x:Name="SendOrderButton"
-		    IsEnabled="false"
-			Text="Send order"
+
+		<StackLayout 
 			HorizontalOptions="Center"
-			VerticalOptions="CenterAndExpand"
-			Clicked="OnOrderButtonClick" />
+			VerticalOptions="EndAndExpand">
+			<Label 
+				Text="Total: 0 CHF"
+				x:Name="TotalAmount" 
+				FontSize="Small" />
+			<Button
+		    	x:Name="SendOrderButton"
+		    	IsEnabled="false"
+				Text="Send order"
+				Clicked="OnOrderButtonClick" />
+		</StackLayout>
+
+	
 	</StackLayout>
 </ContentPage>
