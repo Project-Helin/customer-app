@@ -15,7 +15,7 @@ namespace customerapp
         {
 			this.orderApiOutput = orderApiOutput;
 
-			var map = createMap (orderApiOutput);
+			var map = initialiseMap (orderApiOutput);
 
 			Button button = new Button
 			{
@@ -34,7 +34,8 @@ namespace customerapp
             Content = stack;
         }
 
-		MapWithRoute createMap(OrderApiOutput orderApiOutput){
+		MapWithRoute initialiseMap(OrderApiOutput orderApiOutput){
+			
 			var map = new MapWithRoute(){
 				IsShowingUser = true,
 				HeightRequest = 100,
@@ -73,7 +74,7 @@ namespace customerapp
 			await rest.ConfirmOrder (orderApiOutput.orderId);
 			// TODO change to another page 
 			var stack = new StackLayout { Spacing = 0 };
-			stack.Children.Add(createMap(orderApiOutput));
+			stack.Children.Add(initialiseMap(orderApiOutput));
 			Content = stack;
 		}
     }

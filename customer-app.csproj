@@ -55,11 +55,13 @@
     </Compile>
     <Compile Include="Service\RestService.cs" />
     <Compile Include="Dto\OrderApiOutput.cs" />
-    <Compile Include="OrderConfirmPage.cs" />
     <Compile Include="MapWithRoute.cs" />
     <Compile Include="Dto\Route.cs" />
     <Compile Include="Dto\Waypoint.cs" />
     <Compile Include="Dto\Organisation.cs" />
+    <Compile Include="OrderConfirmPage.xaml.cs">
+      <DependentUpon>OrderConfirmPage.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="packages\Xamarin.Forms.2.2.0.31\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('packages\Xamarin.Forms.2.2.0.31\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />
@@ -77,6 +79,9 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Include="CartPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OrderConfirmPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>

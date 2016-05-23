@@ -24,7 +24,7 @@ namespace customerapp
 		public static string ApiUrlListProducts = ApiUrlBase + "/api/products/find-by-location/{0}/{1}";
 		public static string ApiUrlListProductsAll = ApiUrlBase + "/api/products/";
 		public static string ApiUrlListOrder = ApiUrlBase + "/api/orders/";
-		public static string ApiUrlConfirmtOrder = ApiUrlBase + "/api/orders/{0}/confirm";
-
+		public static string ApiUrlConfirmOrder = ApiUrlBase + "/api/orders/{0}/confirm";
+		public static string ApiUrlCancelOrder = ApiUrlBase + "/api/orders/{0}/cancel";
     }
 }

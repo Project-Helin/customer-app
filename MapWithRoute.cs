@@ -13,9 +13,6 @@ namespace customerapp
 			RouteCoordinates = new List<customerapp.Dto.Position> ();
 		}
 
-
-
-
 	}
 }
 

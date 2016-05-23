@@ -43,6 +43,7 @@ namespace customerapp
 				products.Add (each);
 			}
 
+			setTotalAmout (0);
 		}
 
 		void ProductTapped(object sender, ItemTappedEventArgs e)
@@ -68,9 +69,14 @@ namespace customerapp
 
 		void updateTotalAmount(){
 			var totalAmout = orderedProducts.Sum((a) => a.Amount * a.Price);
+			setTotalAmout (totalAmout);
+		}
+
+		void setTotalAmout(decimal totalAmout){
 			Label totalAmountLabel = this.FindByName<Label> ("TotalAmount");
 			totalAmountLabel.Text = "Total: " + totalAmout + " CHF";
 		}
+
 
         async void OnOrderButtonClick(object sender, EventArgs args)
         {

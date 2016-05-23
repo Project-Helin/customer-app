@@ -79,7 +79,7 @@ namespace customerapp
 		}
 
 		public async Task ConfirmOrder(String orderId){
-			var uri = new Uri (string.Format(Constants.ApiUrlConfirmtOrder, orderId));
+			var uri = new Uri (string.Format(Constants.ApiUrlConfirmOrder, orderId));
 			Debug.WriteLine ("URI " + uri);
 			var content = new StringContent ("", Encoding.UTF8);
 			HttpResponseMessage response = await client.PostAsync (uri, content);
@@ -122,6 +122,19 @@ namespace customerapp
 				return null;
 			}
 
+		}
+
+		public async Task CancelOrder (string orderId)
+		{
+			var uri = new Uri (string.Format(Constants.ApiUrlCancelOrder, orderId));
+			Debug.WriteLine ("URI " + uri);
+
+			var content = new StringContent ("", Encoding.UTF8);
+			HttpResponseMessage response = await client.PostAsync (uri, content);
+
+			if (!response.IsSuccessStatusCode) {
+				Debug.WriteLine ("Failed to create order with status code " + response.StatusCode);
+			}
 		}
 
 		String getProjectId(ICollection<Product> orderProducts){
