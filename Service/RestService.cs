@@ -11,6 +11,7 @@ using Newtonsoft.Json.Serialization;
 using Xamarin.Forms;
 
 using Plugin.Geolocator;
+using Xamarin.Auth;
 
 namespace customerapp
 {
@@ -90,7 +91,7 @@ namespace customerapp
 		
 		}
 
-		public async Task<OrderApiOutput> CreateOrder (ICollection<Product> orderProducts)
+		public async Task<OrderApiOutput> CreateOrder (Customer currentCustomer, ICollection<Product> orderProducts)
 		{
 			var uri = new Uri (Constants.ApiUrlListOrder);
 			Debug.WriteLine ("URI " + uri);
@@ -99,8 +100,7 @@ namespace customerapp
 			var projectId = getProjectId (orderProducts);
 
 			var request = new {
-				displayName = "Batman",
-				email = "batman@wayneenterprise.com",
+				customerId = currentCustomer.Id,
 				customerPosition = position,
 				projectId = projectId,
 				orderProducts = orderProducts
@@ -146,6 +146,66 @@ namespace customerapp
 			enumerator.MoveNext ();
 			return enumerator.Current.ProjectId;
 		}
+
+		public async Task<Customer> GetCustomerInfo (Account account)
+		{
+			// If the user is authenticated, request their basic user data from Google
+			var request = new OAuth2Request("GET", new Uri(Constants.UserInfoUrl), null, account);
+
+			var response = await request.GetResponseAsync();
+			if (response != null)
+			{
+				// Deserialize the data and store it in the account store
+				string userJson = response.GetResponseText();
+
+				Debug.WriteLine (userJson);
+				return JsonConvert.DeserializeObject<Customer>(userJson, jsonSetting);
+			}
+
+			return null;
+		}
+
+		public async Task<Customer> SaveCustomer (Customer customer)
+		{
+			var uri = new Uri (Constants.ApiUrlSaveCustomer);
+			Debug.WriteLine ("URI " + uri);
+
+			var jsonToSend = JsonConvert.SerializeObject (customer, jsonSetting);
+			var contentToSend = new StringContent (jsonToSend, Encoding.UTF8, "application/json");
+
+			HttpResponseMessage response = await client.PostAsync (uri, contentToSend);
+
+			if (response.IsSuccessStatusCode) {
+				var content = await response.Content.ReadAsStringAsync();
+
+				Debug.WriteLine (content);
+				Customer output = Newtonsoft.Json.JsonConvert.DeserializeObject <Customer> (content, jsonSetting); 
+				return output;
+			} else {
+				Debug.WriteLine ("Failed to save customer with status code " + response.StatusCode);
+				return null;
+			}
+		}
+
+
+		public async Task<Customer> GetCustomerById (String customerId)
+		{
+			Debug.WriteLine ("Fetch customer ");
+
+			var uri = new Uri (String.Format(Constants.ApiUrlCustomerFind, customerId));
+			Debug.WriteLine ("URI " + uri);
+
+			var response = await client.GetAsync (uri);
+			if (response.IsSuccessStatusCode) {
+				var content = await response.Content.ReadAsStringAsync ();
+				return Newtonsoft.Json.JsonConvert.DeserializeObject <Customer> (content);
+			} else {
+				Debug.WriteLine ("Failed to get customer " + customerId + " with status code " + response.StatusCode);
+			}
+
+			return null;
+		}
+
 
 	}
 

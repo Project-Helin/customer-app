@@ -16,7 +16,7 @@ namespace customerapp
 			InitializeComponent ();
 			this.orderApiOutput = orderApiOutput;
 
-			var map = initialiseMap (orderApiOutput);
+			initialiseMap (orderApiOutput);
 		}
 
 		MapWithRoute initialiseMap(OrderApiOutput orderApiOutput){
@@ -54,6 +54,9 @@ namespace customerapp
 		async void OnButtonClicked(object sender, EventArgs e)
 		{
 			await rest.ConfirmOrder (orderApiOutput.orderId);
+
+
+
 			// TODO change to another page 
 			var stack = new StackLayout { Spacing = 0 };
 			stack.Children.Add(initialiseMap(orderApiOutput));

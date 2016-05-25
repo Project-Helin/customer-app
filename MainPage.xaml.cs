@@ -16,6 +16,20 @@ namespace customerapp
 
         }
 
+		protected async override void OnAppearing(){
+			base.OnAppearing ();
+			var hasCustomer = Application.Current.Properties.ContainsKey("customerId");
+
+			if (hasCustomer && App.Customer != null) {
+				RestService rest = new RestService ();
+
+				var customerId = Application.Current.Properties ["customerId"] as string;
+				App.Customer = await rest.GetCustomerById (customerId);	
+			}
+
+		}
+
+
         async void OnShowOrdersClick(object sender, EventArgs args) {
             await Navigation.PushAsync(new OrderListPage());
         }
@@ -24,9 +38,6 @@ namespace customerapp
             await Navigation.PushAsync(new ProductListPage());
         }
 
-
-
- 
     }
 }
 

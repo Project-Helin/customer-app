@@ -1,6 +1,7 @@
 ﻿using System;
 
 using Xamarin.Forms;
+using System.Diagnostics;
 
 namespace customerapp
 {
@@ -32,7 +33,7 @@ namespace customerapp
                     { 
                         if (IsLoggedIn)
                         {
-                            NavPage.Navigation.PopModalAsync();    
+							NavPage.Navigation.PopAsync();    
                         }
                     });
             }
@@ -42,13 +43,20 @@ namespace customerapp
         {
             // The root page of your application
             MainPage = NavPage = new NavigationPage(new MainPage());
+
+			Debug.WriteLine ("Here customer is " + Customer);
             //User shouldnt to have to login in order to see Products
             //NavPage.Navigation.PushModalAsync(new AuthenticationPage());
+
+
         }
 
-        protected override void OnStart()
+        protected async override void OnStart()
         {
-            // Handle when your app starts
+            
+			// Handle when your app starts
+
+
         }
 
         protected override void OnSleep()

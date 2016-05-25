@@ -39,6 +39,7 @@ namespace MapOverlay.iOS
 				}
 
 				var routeOverlay = MKPolyline.FromCoordinates (coords);
+
 				nativeMap.AddOverlay (routeOverlay);
 			}
 		}

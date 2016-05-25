@@ -18,6 +18,8 @@ namespace TodoAWSSimpleDB.Droid
     {
         bool isShown;
 
+		RestService rest = new RestService();
+
         protected override void OnElementChanged(ElementChangedEventArgs<Page> e)
         {
             base.OnElementChanged(e);
@@ -35,7 +37,8 @@ namespace TodoAWSSimpleDB.Droid
                         Constants.Scope,
                         new Uri(Constants.AuthorizeUrl),
                         new Uri(Constants.RedirectUrl),
-                        new Uri(Constants.AccessTokenUrl));
+                        new Uri(Constants.AccessTokenUrl)
+					);
 
                     auth.Completed += OnAuthenticationCompleted;
 
@@ -56,17 +59,8 @@ namespace TodoAWSSimpleDB.Droid
         {
             if (e.IsAuthenticated)
             {
-                // If the user is authenticated, request their basic user data from Google
-                // UserInfoUrl = https://www.googleapis.com/oauth2/v2/userinfo
-                var request = new OAuth2Request("GET", new Uri(Constants.UserInfoUrl), null, e.Account);
-                var response = await request.GetResponseAsync();
-                if (response != null)
-                {
-                    // Deserialize the data and store it in the account store
-                    string userJson = response.GetResponseText();
-                    Console.WriteLine(JsonConvert.DeserializeObject<Customer>(userJson));
-                    App.Customer = JsonConvert.DeserializeObject<Customer>(userJson);
-                }
+				Customer customer = await rest.GetCustomerInfo (e.Account);
+				App.Customer = customer;
             }
             App.SuccessfulLoginAction.Invoke();
         }

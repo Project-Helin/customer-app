@@ -17,7 +17,7 @@
 							</StackLayout>
 
 							<Label
-								Text="{Binding Price}"
+								Text="{Binding Price, StringFormat='{0:0.00}'}"
 								HorizontalOptions="End" />
 							<Label
 								Text="CHF"
@@ -36,7 +36,7 @@
 			HorizontalOptions="Center"
 			VerticalOptions="EndAndExpand">
 			<Label 
-				Text="Total: 0 CHF"
+				Text="Total: 0.00 CHF"
 				x:Name="TotalAmount" 
 				FontSize="Small" />
 			<Button

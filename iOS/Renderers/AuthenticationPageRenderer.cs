@@ -16,6 +16,7 @@ namespace TodoAWSSimpleDB.iOS
     public class AuthenticationPageRenderer : PageRenderer
     {
         bool isShown;
+		RestService rest = new RestService ();
 
         public override void ViewDidAppear(bool animated)
         {
@@ -57,16 +58,15 @@ namespace TodoAWSSimpleDB.iOS
         {
             if (e.IsAuthenticated)
             {
-                // If the user is authenticated, request their basic user data from Google
-                // UserInfoUrl = https://www.googleapis.com/oauth2/v2/userinfo
-                var request = new OAuth2Request("GET", new Uri(Constants.UserInfoUrl), null, e.Account);
-                var response = await request.GetResponseAsync();
-                if (response != null)
-                {
-                    // Deserialize the data and store it 
-                    string userJson = response.GetResponseText();
-                    App.Customer = JsonConvert.DeserializeObject<Customer>(userJson);
-                }
+				App.Customer = await rest.GetCustomerInfo (e.Account);
+				Console.WriteLine (App.Customer.Email);
+				Console.WriteLine (App.Customer.GivenName);
+				Console.WriteLine (App.Customer.FamilyName);
+				Console.WriteLine (App.Customer.Id);
+
+
+				App.Customer = await rest.SaveCustomer (App.Customer);
+				Application.Current.Properties ["customerId"] = App.Customer.Id;
             }
 			
             App.SuccessfulLoginAction.Invoke();

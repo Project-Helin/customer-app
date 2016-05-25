@@ -48,5 +48,5 @@ namespace MapOverlay.Droid
 			map.AddPolyline (polylineOptions);
 		}
 
-		}
+	}
 }
