@@ -2,9 +2,9 @@
 <ContentPage
 	xmlns="http://xamarin.com/schemas/2014/forms"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-	x:Class="customerapp.OrderListPage">
+	x:Class="customerapp.MissionListPage">
 	<ListView
-		x:Name="OrderListView">
+		x:Name="MissionListView">
 		<ListView.ItemTemplate>
 			<DataTemplate>
 				<ViewCell>
@@ -14,10 +14,10 @@
 							Orientation="Horizontal"
 							Padding="10">
 							<Label
-								Text="{Binding CreatedAt,  StringFormat='{0:MMMM dd, yyyy}'}"
+								Text="{Binding State}"
 								HorizontalOptions="End" />
 							<Label
-								Text="{Binding State}"
+								Text="{Binding OrderProduct.Product.Name}"
 								HorizontalOptions="End" />
 						</StackLayout>
 					</StackLayout>

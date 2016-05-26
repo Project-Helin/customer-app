@@ -13,6 +13,7 @@ namespace customerapp
 
 		public Route Route { get; set; }
 
+		public OrderProduct OrderProduct { get; set; }
 
 	}
 

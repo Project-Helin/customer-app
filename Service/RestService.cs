@@ -61,6 +61,60 @@ namespace customerapp
 			return items;
 		}
 
+		public async Task<List<Order>> GetAllOrders (String customerId)
+		{
+			Debug.WriteLine ("Fetch order ");
+
+			var position = await GetPosition ();
+
+			string x = position.Lat.ToString();
+			string y = position.Lon.ToString();
+
+			// replace is needed to be sure, that double is written xx.zz not xx,zz
+			var uri = new Uri (String.Format(Constants.ApiUrlListProducts, x.Replace(',', '.'), y.Replace(',', '.')));
+			Debug.WriteLine ("URI " + uri);
+
+			var response = await client.GetAsync (uri);
+			List<Order> items = new List<Order>();
+
+			if (response.IsSuccessStatusCode) {
+				var content = await response.Content.ReadAsStringAsync ();
+				items = Newtonsoft.Json.JsonConvert.DeserializeObject <List<Order>> (content);
+			} else {
+				Debug.WriteLine ("Failed to get all order with status code " + response.StatusCode);
+			}
+
+			return items;
+		}
+
+
+
+		public async Task<List<Mission>> GetAllMissions (String customerId)
+		{
+			Debug.WriteLine ("Fetch order ");
+
+			var position = await GetPosition ();
+
+			string x = position.Lat.ToString();
+			string y = position.Lon.ToString();
+
+			// replace is needed to be sure, that double is written xx.zz not xx,zz
+			var uri = new Uri (String.Format(Constants.ApiUrlListProducts, x.Replace(',', '.'), y.Replace(',', '.')));
+			Debug.WriteLine ("URI " + uri);
+
+			var response = await client.GetAsync (uri);
+			List<Mission> items = new List<Mission>();
+
+			if (response.IsSuccessStatusCode) {
+				var content = await response.Content.ReadAsStringAsync ();
+				items = Newtonsoft.Json.JsonConvert.DeserializeObject <List<Mission>> (content);
+			} else {
+				Debug.WriteLine ("Failed to get all order with status code " + response.StatusCode);
+			}
+
+			return items;
+		}
+
 
 		async Task<customerapp.Dto.Position> GetPosition ()
 		{

@@ -32,9 +32,112 @@ namespace customerapp
 			});
 
 			return Task<List<Product>>.Factory.StartNew (() => list);
+		}
 
+		public Task<List<Order>> GetAllOrders (String customerId)
+		{
+			Debug.WriteLine ("GetAllOrders");
+
+			var waypoints = new List<Waypoint> ();
+			waypoints.Add (new Waypoint{
+				Position = new Position{
+					Lat = 8, 
+					Lon = 47
+				}, 
+				Action = "FLY"
+			});
+
+			waypoints.Add (new Waypoint{
+				Position = new Position{
+					Lat = 8.1234, 
+					Lon = 47
+				}, 
+				Action = "DROP"
+			});
+
+
+			var missions = new List<Mission> ();
+			missions.Add (new Mission{
+				Id = "Id", 
+				State = "Unkown", 
+				Route = new Route{
+					DistanceInMeters = 10, 
+					WayPoints = waypoints
+				}
+			});
+
+			var orderProducts = new List<OrderProduct> ();
+			orderProducts.Add (new OrderProduct{
+				Product = new Product{
+					Name = "Apple", 
+					Price = 12.30m
+				}
+			});
+
+			orderProducts.Add (new OrderProduct{
+				Product = new Product{
+					Name = "Red Bull", 
+					Price = 2.50m
+				}
+			});
+
+			var list = new List <Order> ();
+			list.Add (new Order{
+				Id = "SOME=ID",
+				Missions = missions, 
+				CreatedAt = DateTime.Now.AddMonths(-4), 
+				OrderProducts = orderProducts, 
+				State = "NEW"
+			});
+
+			return Task<List<Order>>.Factory.StartNew (() => list);
 
 		}
+
+		public Task<List<Mission>> GetAllMissions (String orderId)
+		{
+			Debug.WriteLine ("GetAllMissions");
+			var waypoints = new List<Waypoint> ();
+			waypoints.Add (new Waypoint{
+				Position = new Position{
+					Lat = 8, 
+					Lon = 47
+				}, 
+				Action = "FLY"
+			});
+
+			waypoints.Add (new Waypoint{
+				Position = new Position{
+					Lat = 8.1234, 
+					Lon = 47
+				}, 
+				Action = "DROP"
+			});
+
+
+			var missions = new List<Mission> ();
+			missions.Add (new Mission{
+				Id = "Id", 
+				State = "Unkown", 
+				Route = new Route{
+					DistanceInMeters = 10, 
+					WayPoints = waypoints
+				}, 
+				OrderProduct = new OrderProduct{
+					Product = new Product{
+						Name = "Red Bull", 
+						Price = 2.50m
+					}, 
+					Amount = 10
+				}
+			});
+
+			return Task<List<Mission>>.Factory.StartNew (() => missions);
+
+		}
+
+
+
 
 		public Task ConfirmOrder(String orderId, String customerId){
 			Debug.WriteLine ("ConfirmOrder");

@@ -90,7 +90,6 @@ namespace customerapp
 				Order response = await restService.CreateOrder(orderedProducts);
 				Debug.WriteLine ("Created order with id {0}", response.Id); 
 
-
 				await Navigation.PushModalAsync(new OrderConfirmPage(response));
             }
         }

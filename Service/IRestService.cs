@@ -10,6 +10,10 @@ namespace customerapp
 	{
 		Task<List<Product>> GetAllProducts ();
 
+		Task<List<Order>> GetAllOrders (String customerId);
+
+		Task<List<Mission>>  GetAllMissions (String orderId);
+
 		Task ConfirmOrder(String orderId, String customerId);
 
 		Task<Order> CreateOrder (ICollection<Product> orderProducts);
