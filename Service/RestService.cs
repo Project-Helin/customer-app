@@ -79,19 +79,24 @@ namespace customerapp
 			return p;
 		}
 
-		public async Task ConfirmOrder(String orderId){
-			var uri = new Uri (string.Format(Constants.ApiUrlConfirmOrder, orderId));
+		public async Task ConfirmOrder(String orderId, String customerId){
+			var uri = new Uri (string.Format(Constants.ApiUrlConfirmOrder, orderId, customerId));
 			Debug.WriteLine ("URI " + uri);
 			var content = new StringContent ("", Encoding.UTF8);
 			HttpResponseMessage response = await client.PostAsync (uri, content);
 
 			if (!response.IsSuccessStatusCode) {
-				Debug.WriteLine ("Failed to create order with status code " + response.StatusCode);
+				Debug.WriteLine (
+					"Failed to confirm order {0} for customer {1} with status code {2}", 
+					response.StatusCode, 
+					orderId, 
+					customerId
+				);
 			}
 		
 		}
 
-		public async Task<OrderApiOutput> CreateOrder (Customer currentCustomer, ICollection<Product> orderProducts)
+		public async Task<Order> CreateOrder (ICollection<Product> orderProducts)
 		{
 			var uri = new Uri (Constants.ApiUrlListOrder);
 			Debug.WriteLine ("URI " + uri);
@@ -100,7 +105,6 @@ namespace customerapp
 			var projectId = getProjectId (orderProducts);
 
 			var request = new {
-				customerId = currentCustomer.Id,
 				customerPosition = position,
 				projectId = projectId,
 				orderProducts = orderProducts
@@ -114,8 +118,8 @@ namespace customerapp
 			if (response.IsSuccessStatusCode) {
 				var content = await response.Content.ReadAsStringAsync();
 
-				Debug.WriteLine (content);
-				OrderApiOutput output = Newtonsoft.Json.JsonConvert.DeserializeObject <OrderApiOutput> (content, jsonSetting); 
+				Debug.WriteLine ("Create order response {0}", content);
+				Order output = Newtonsoft.Json.JsonConvert.DeserializeObject <Order> (content, jsonSetting); 
 				return output;
 			} else {
 				Debug.WriteLine ("Failed to create order with status code " + response.StatusCode);
@@ -124,16 +128,17 @@ namespace customerapp
 
 		}
 
-		public async Task CancelOrder (string orderId)
+		public async Task DeleteOrder (string orderId)
 		{
-			var uri = new Uri (string.Format(Constants.ApiUrlCancelOrder, orderId));
+			var uri = new Uri (string.Format(Constants.ApiUrlDeleteOrder, orderId));
 			Debug.WriteLine ("URI " + uri);
 
 			var content = new StringContent ("", Encoding.UTF8);
 			HttpResponseMessage response = await client.PostAsync (uri, content);
+			Debug.WriteLine ("Delete order {0} successfully", orderId);
 
 			if (!response.IsSuccessStatusCode) {
-				Debug.WriteLine ("Failed to create order with status code " + response.StatusCode);
+				Debug.WriteLine ("Failed to delete order {0} with status code {1} ", orderId, response.StatusCode);
 			}
 		}
 
@@ -157,8 +162,6 @@ namespace customerapp
 			{
 				// Deserialize the data and store it in the account store
 				string userJson = response.GetResponseText();
-
-				Debug.WriteLine (userJson);
 				return JsonConvert.DeserializeObject<Customer>(userJson, jsonSetting);
 			}
 
@@ -177,8 +180,6 @@ namespace customerapp
 
 			if (response.IsSuccessStatusCode) {
 				var content = await response.Content.ReadAsStringAsync();
-
-				Debug.WriteLine (content);
 				Customer output = Newtonsoft.Json.JsonConvert.DeserializeObject <Customer> (content, jsonSetting); 
 				return output;
 			} else {

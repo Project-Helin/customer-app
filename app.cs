@@ -33,7 +33,9 @@ namespace customerapp
                     { 
                         if (IsLoggedIn)
                         {
-							NavPage.Navigation.PopAsync();    
+
+							Debug.WriteLine ("Customer successfully logged in");
+							NavPage.Navigation.PopModalAsync();    
                         }
                     });
             }
@@ -51,11 +53,10 @@ namespace customerapp
 
         }
 
-        protected async override void OnStart()
+        protected override void OnStart()
         {
             
 			// Handle when your app starts
-
 
         }
 

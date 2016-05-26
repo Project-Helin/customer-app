@@ -28,13 +28,13 @@ namespace customerapp
         public static string RedirectUrl = "https://blank.org/";
 
 		// public static string ApiUrlBase = "http://192.168.188.26:9000";
-		public static string ApiUrlBase = "http://152.96.235.165:9000";
+		public static string ApiUrlBase = "http://152.96.233.63:9000";
 		// public static string ApiUrlBase = "http://151.80.44.117:80";
 		public static string ApiUrlListProducts = ApiUrlBase + "/api/products/find-by-location/{0}/{1}";
 		public static string ApiUrlListProductsAll = ApiUrlBase + "/api/products/";
 		public static string ApiUrlListOrder = ApiUrlBase + "/api/orders/";
-		public static string ApiUrlConfirmOrder = ApiUrlBase + "/api/orders/{0}/confirm";
-		public static string ApiUrlCancelOrder = ApiUrlBase + "/api/orders/{0}/cancel";
+		public static string ApiUrlConfirmOrder = ApiUrlBase + "/api/orders/{0}/confirm/{1}";
+		public static string ApiUrlDeleteOrder = ApiUrlBase + "/api/orders/{0}/delete";
 
 		public static string ApiUrlSaveCustomer = ApiUrlBase + "/api/customers/save";
 		public static string ApiUrlCustomerFind = ApiUrlBase + "/api/customers/{0}";

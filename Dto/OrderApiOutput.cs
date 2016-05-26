@@ -1,5 +1,6 @@
 ﻿using System;
 using customerapp.Dto;
+using System.Collections.Generic;
 
 namespace customerapp
 {
@@ -10,6 +11,9 @@ namespace customerapp
 		public String orderId { get; set; }
 
 		public Route Route { get; set; }
+
+		public List<Mission> Missions { get; set; }
+
 
 	}
 }

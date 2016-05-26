@@ -87,20 +87,11 @@ namespace customerapp
 
             if (orderConfirmed)
             {
-				// get Location 
-				var a = await Navigation.PushModalAsync(new AuthenticationPage());
+				Order response = await restService.CreateOrder(orderedProducts);
+				Debug.WriteLine ("Created order with id {0}", response.Id); 
 
-				// send order
-				if(App.IsLoggedIn){
-					var response = await restService.CreateOrder(App.Customer, orderedProducts);
-					var deliveryPosition = response.DeliveryPosition;
-					Debug.WriteLine (deliveryPosition); 
 
-					await Navigation.PushAsync(new OrderConfirmPage(response));
-				}else{
-					Debug.WriteLine("User not logged in ");
-
-				}
+				await Navigation.PushModalAsync(new OrderConfirmPage(response));
             }
         }
 

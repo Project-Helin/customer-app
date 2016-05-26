@@ -57,12 +57,16 @@ namespace TodoAWSSimpleDB.Droid
 
         async void OnAuthenticationCompleted(object sender, AuthenticatorCompletedEventArgs e)
         {
-            if (e.IsAuthenticated)
-            {
-				Customer customer = await rest.GetCustomerInfo (e.Account);
-				App.Customer = customer;
-            }
-            App.SuccessfulLoginAction.Invoke();
+			if (e.IsAuthenticated)
+			{
+				App.Customer = await rest.GetCustomerInfo (e.Account);
+				App.Customer = await rest.SaveCustomer (App.Customer);
+				App.Current.Properties ["customerId"] = App.Customer.Id;
+
+				System.Diagnostics.Debug.WriteLine ("Set customerId to {0}", App.Current.Properties ["customerId"]);
+			}
+
+			App.SuccessfulLoginAction.Invoke();
         }
     }
 }

@@ -9,7 +9,8 @@
 			<local:MapWithRoute 
 				x:Name="Map" 
 				IsShowingUser = "true"
-				VerticalOptions = "FillAndExpand"/>
+				VerticalOptions = "FillAndExpand"
+				MapType="Satellite"/>
 
 				<StackLayout 
 					Orientation="Horizontal"

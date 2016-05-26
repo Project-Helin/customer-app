@@ -7,6 +7,7 @@ using Xamarin.Auth;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 using customerapp;
+using System.Diagnostics;
 
 [assembly: ExportRenderer(typeof(AuthenticationPage), typeof(AuthenticationPageRenderer))]
 
@@ -59,14 +60,11 @@ namespace TodoAWSSimpleDB.iOS
             if (e.IsAuthenticated)
             {
 				App.Customer = await rest.GetCustomerInfo (e.Account);
-				Console.WriteLine (App.Customer.Email);
-				Console.WriteLine (App.Customer.GivenName);
-				Console.WriteLine (App.Customer.FamilyName);
-				Console.WriteLine (App.Customer.Id);
-
-
 				App.Customer = await rest.SaveCustomer (App.Customer);
 				Application.Current.Properties ["customerId"] = App.Customer.Id;
+
+				Debug.WriteLine ("Set customerId to {0}", Application.Current.Properties ["customerId"]);
+
             }
 			
             App.SuccessfulLoginAction.Invoke();
