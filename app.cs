@@ -7,7 +7,7 @@ namespace customerapp
 {
     public class App : Application
     {
-        static NavigationPage NavPage;
+        public static NavigationPage NavPage;
 
         public static Customer Customer { get; set; }
 
@@ -45,8 +45,8 @@ namespace customerapp
 
         public App()
         {
-            // The root page of your application
-            MainPage = NavPage = new NavigationPage(new MainPage());
+			// The root page of your application
+			MainPage = NavPage = new NavigationPage(new MainPage());
 
 			Debug.WriteLine ("Here customer is " + Customer);
             //User shouldnt to have to login in order to see Products

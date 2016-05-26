@@ -18,12 +18,10 @@ namespace customerapp
 
 		protected async override void OnAppearing(){
 			base.OnAppearing ();
-			var hasCustomer = Application.Current.Properties.ContainsKey("customerId");
 
-			var loadCustomer = hasCustomer && App.Customer == null;
+			var customerId = Settings.GetCustomerIdOrNull ();
+			var loadCustomer =  customerId != null && App.Customer == null;
 			if (loadCustomer) {
-
-				var customerId = Application.Current.Properties ["customerId"] as string;
 				App.Customer = await App.Rest.GetCustomerById (customerId);	
 			} else {
 				Debug.WriteLine ("Not loaded customer because hasCustomer={0} and isCustomerNull = {1}", 

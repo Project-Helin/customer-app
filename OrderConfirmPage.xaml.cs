@@ -74,7 +74,12 @@ namespace customerapp
 				Debug.WriteLine ("First mission {0}", x.Current.Id);
 
 				Debug.WriteLine ("Push misison page");
-				await Navigation.PushAsync(new MissionPage(x.Current));
+
+				Device.BeginInvokeOnMainThread( () => {
+					Navigation.PopModalAsync ();
+					Navigation.PushModalAsync(new MissionPage(x.Current));
+				});
+
 
 			} else {
 				Debug.WriteLine ("Customer not logged in yet");
