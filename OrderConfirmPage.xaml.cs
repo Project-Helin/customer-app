@@ -88,7 +88,7 @@ namespace customerapp
 
 		async  void OnCancelButtonClicked(object sender, EventArgs e){
 			await rest.DeleteOrder (order.Id);
-			await Navigation.PopAsync();
+			await Navigation.PopModalAsync();
 
 		}
 	}

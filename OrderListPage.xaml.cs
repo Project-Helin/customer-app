@@ -28,7 +28,7 @@ namespace customerapp
 			orders.Clear ();
 
 			if (App.IsLoggedIn) {
-				var ordersFromServer = await App.Rest.GetAllOrders (App.Customer.Id);
+				var ordersFromServer = await App.Rest.GetAllOrders (Settings.GetCustomerIdOrNull());
 				foreach (Order each in ordersFromServer) {
 					orders.Add (each);
 				}

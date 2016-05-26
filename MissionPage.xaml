@@ -9,6 +9,7 @@
 			<local:MapWithRoute 
 				x:Name="Map" 
 				IsShowingUser = "true"
+				MapType="Satellite"
 				VerticalOptions = "FillAndExpand"/>
 		</StackLayout>
 	</ContentPage.Content>

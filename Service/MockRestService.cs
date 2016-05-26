@@ -85,7 +85,7 @@ namespace customerapp
 			list.Add (new Order{
 				Id = "SOME=ID",
 				Missions = missions, 
-				CreatedAt = DateTime.Now.AddMonths(-4), 
+				//CreatedAt = DateTime.Now.AddMonths(-4), 
 				OrderProducts = orderProducts, 
 				State = "NEW"
 			});
@@ -118,7 +118,7 @@ namespace customerapp
 			var missions = new List<Mission> ();
 			missions.Add (new Mission{
 				Id = "Id", 
-				State = "Unkown", 
+				State = "In Delivery", 
 				Route = new Route{
 					DistanceInMeters = 10, 
 					WayPoints = waypoints

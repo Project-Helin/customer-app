@@ -12,6 +12,7 @@ using Xamarin.Forms;
 
 using Plugin.Geolocator;
 using Xamarin.Auth;
+using Newtonsoft.Json.Converters;
 
 namespace customerapp
 {
@@ -63,15 +64,9 @@ namespace customerapp
 
 		public async Task<List<Order>> GetAllOrders (String customerId)
 		{
-			Debug.WriteLine ("Fetch order ");
+			Debug.WriteLine ("Fetch all orders for customer {0} ", customerId);
 
-			var position = await GetPosition ();
-
-			string x = position.Lat.ToString();
-			string y = position.Lon.ToString();
-
-			// replace is needed to be sure, that double is written xx.zz not xx,zz
-			var uri = new Uri (String.Format(Constants.ApiUrlListProducts, x.Replace(',', '.'), y.Replace(',', '.')));
+			var uri = new Uri (String.Format (Constants.ApiUrlOrdersByCustomer, customerId));
 			Debug.WriteLine ("URI " + uri);
 
 			var response = await client.GetAsync (uri);
@@ -79,27 +74,19 @@ namespace customerapp
 
 			if (response.IsSuccessStatusCode) {
 				var content = await response.Content.ReadAsStringAsync ();
-				items = Newtonsoft.Json.JsonConvert.DeserializeObject <List<Order>> (content);
+				items = Newtonsoft.Json.JsonConvert.DeserializeObject <List<Order>> (content, new JavaScriptDateTimeConverter ());
 			} else {
-				Debug.WriteLine ("Failed to get all order with status code " + response.StatusCode);
+				Debug.WriteLine ("Failed to get all orders with status code " + response.StatusCode);
 			}
 
 			return items;
 		}
 
-
-
-		public async Task<List<Mission>> GetAllMissions (String customerId)
+		public async Task<List<Mission>> GetAllMissions (String orderId)
 		{
-			Debug.WriteLine ("Fetch order ");
+			Debug.WriteLine ("Fetch all missions for {0} ", orderId);
 
-			var position = await GetPosition ();
-
-			string x = position.Lat.ToString();
-			string y = position.Lon.ToString();
-
-			// replace is needed to be sure, that double is written xx.zz not xx,zz
-			var uri = new Uri (String.Format(Constants.ApiUrlListProducts, x.Replace(',', '.'), y.Replace(',', '.')));
+			var uri = new Uri (String.Format(Constants.ApiUrlMissionsByOrder, orderId));
 			Debug.WriteLine ("URI " + uri);
 
 			var response = await client.GetAsync (uri);
@@ -107,9 +94,9 @@ namespace customerapp
 
 			if (response.IsSuccessStatusCode) {
 				var content = await response.Content.ReadAsStringAsync ();
-				items = Newtonsoft.Json.JsonConvert.DeserializeObject <List<Mission>> (content);
+				items = Newtonsoft.Json.JsonConvert.DeserializeObject <List<Mission>> (content, jsonSetting);
 			} else {
-				Debug.WriteLine ("Failed to get all order with status code " + response.StatusCode);
+				Debug.WriteLine ("Failed to get all missions with status code " + response.StatusCode);
 			}
 
 			return items;
@@ -244,7 +231,7 @@ namespace customerapp
 
 		public async Task<Customer> GetCustomerById (String customerId)
 		{
-			Debug.WriteLine ("Fetch customer ");
+			Debug.WriteLine ("Fetch customer for id {0}", customerId);
 
 			var uri = new Uri (String.Format(Constants.ApiUrlCustomerFind, customerId));
 			Debug.WriteLine ("URI " + uri);

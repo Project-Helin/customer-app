@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using Xamarin.Forms;
 using Xamarin.Forms.Maps;
 using System.Diagnostics;
+using customerapp.Dto;
+
 
 namespace customerapp
 {
@@ -25,35 +27,43 @@ namespace customerapp
 
 		MapWithRoute initialiseMap(Mission mission){
 			
-			var map = this.FindByName<MapWithRoute>("Map");
-			map.MapType = MapType.Satellite;
+
+
+			var map = Map;
 
 			// add all waypoints for route
 			foreach (var eachWayPoint in mission.Route.WayPoints){
-				map.RouteCoordinates.Add (eachWayPoint.Position);	
+				map.CalculatedRoute.Add (eachWayPoint.Position);	
 			}
-//
-//			var pin = createPinForDeliveryPosition ();
-//			map.Pins.Add(pin);
-//			map.MoveToRegion(MapSpan.FromCenterAndRadius(pin.Position, Distance.FromMeters(100)));
+
+			// add all waypoints for route
+			foreach (var info in mission.DroneInfos){
+				map.FlownRoute.Add (info.PhonePosition);	
+			}
+
+			Waypoint droppoint = mission.Route.WayPoints.Find (o => o.Action.Equals ("DROP"));
+
+			var pin = createPinForDeliveryPosition(droppoint.Position);
+			map.Pins.Add(pin);
+			map.MoveToRegion(MapSpan.FromCenterAndRadius(pin.Position, Distance.FromMeters(100)));
 
 			return map;
 		}
 
-//		Pin createPinForDeliveryPosition(){
-//			var deliveryPosition = new Xamarin.Forms.Maps.Position(
-//				orderApiOutput.DeliveryPosition.Lat, 
-//				orderApiOutput.DeliveryPosition.Lon
-//			);
-//			var pin = new Pin {
-//				Type = PinType.Generic,
-//				Position = deliveryPosition,
-//				Label = "Drop position",
-//				Address = "Expected drop position for your delivery"
-//			};
-//
-//			return pin;
-//		}
+		Pin createPinForDeliveryPosition(customerapp.Dto.Position position){
+			var deliveryPosition = new Xamarin.Forms.Maps.Position(
+				position.Lat, 
+				position.Lon
+			);
+			var pin = new Pin {
+				Type = PinType.Generic,
+				Position = deliveryPosition,
+				Label = "Drop position",
+				Address = "Expected drop position for your delivery"
+			};
+
+			return pin;
+		}
 	}
 }
 

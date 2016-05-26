@@ -16,7 +16,8 @@ namespace MapOverlay.Droid
 		
 		GoogleMap map;
 
-		List<Position> routeCoordinates;
+		List<Position> calculatedRoute;
+		List<Position> flownRoute;
 
 		protected override void OnElementChanged (Xamarin.Forms.Platform.Android.ElementChangedEventArgs<View> e)
 		{
@@ -28,7 +29,8 @@ namespace MapOverlay.Droid
 
 			if (e.NewElement != null) {
 				var formsMap = (MapWithRoute)e.NewElement;
-				routeCoordinates = formsMap.RouteCoordinates;
+				calculatedRoute = formsMap.CalculatedRoute;
+				flownRoute = formsMap.FlownRoute;
 
 				((MapView)Control).GetMapAsync (this);
 			}
@@ -41,11 +43,22 @@ namespace MapOverlay.Droid
 			var polylineOptions = new PolylineOptions ();
 			polylineOptions.InvokeColor (0x66FF0000);
 
-			foreach (var position in routeCoordinates) {
+			foreach (var position in calculatedRoute) {
 				polylineOptions.Add (new LatLng (position.Lat, position.Lon));
 			}
-
 			map.AddPolyline (polylineOptions);
+
+
+			polylineOptions = new PolylineOptions ();
+			polylineOptions.InvokeColor (0x00E5FF00);
+
+			foreach (var position in flownRoute) {
+				polylineOptions.Add (new LatLng (position.Lat, position.Lon));
+			}
+			map.AddPolyline (polylineOptions);
+
+
+
 		}
 
 	}

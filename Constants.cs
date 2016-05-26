@@ -33,10 +33,14 @@ namespace customerapp
 		public static string ApiUrlListProducts = ApiUrlBase + "/api/products/find-by-location/{0}/{1}";
 		public static string ApiUrlListProductsAll = ApiUrlBase + "/api/products/";
 		public static string ApiUrlListOrder = ApiUrlBase + "/api/orders/";
+
 		public static string ApiUrlConfirmOrder = ApiUrlBase + "/api/orders/{0}/confirm/{1}";
 		public static string ApiUrlDeleteOrder = ApiUrlBase + "/api/orders/{0}/delete";
 
 		public static string ApiUrlSaveCustomer = ApiUrlBase + "/api/customers/save";
 		public static string ApiUrlCustomerFind = ApiUrlBase + "/api/customers/{0}";
+
+		public static string ApiUrlOrdersByCustomer = ApiUrlBase + "/api/orders/find-by-customer/{0}";
+		public static string ApiUrlMissionsByOrder = ApiUrlBase + "/api/missions/find-by-order/{0}";
     }
 }

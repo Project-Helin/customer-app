@@ -15,6 +15,7 @@ namespace customerapp
 
 		public OrderProduct OrderProduct { get; set; }
 
+		public List<DroneInfo> DroneInfos{ get; set; }
 	}
 
 }
