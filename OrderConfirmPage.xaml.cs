@@ -12,7 +12,7 @@ namespace customerapp
 	{
 	
 		private Order order; 
-		RestService rest = new RestService ();
+		IRestService rest = App.Rest;
 
 		public OrderConfirmPage (Order order)
 		{
@@ -72,9 +72,6 @@ namespace customerapp
 				x.MoveNext ();
 
 				Debug.WriteLine ("First mission {0}", x.Current.Id);
-
-				Debug.WriteLine ("Pop current confirm dialog");
-				await Navigation.PopAsync ();
 
 				Debug.WriteLine ("Push misison page");
 				await Navigation.PushAsync(new MissionPage(x.Current));

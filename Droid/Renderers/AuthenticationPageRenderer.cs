@@ -18,7 +18,7 @@ namespace TodoAWSSimpleDB.Droid
     {
         bool isShown;
 
-		RestService rest = new RestService();
+		IRestService rest = App.Rest;
 
         protected override void OnElementChanged(ElementChangedEventArgs<Page> e)
         {

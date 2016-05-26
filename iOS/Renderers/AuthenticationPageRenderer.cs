@@ -17,7 +17,7 @@ namespace TodoAWSSimpleDB.iOS
     public class AuthenticationPageRenderer : PageRenderer
     {
         bool isShown;
-		RestService rest = new RestService ();
+		RestService rest = App.Rest;
 
         public override void ViewDidAppear(bool animated)
         {
@@ -64,7 +64,7 @@ namespace TodoAWSSimpleDB.iOS
 				Application.Current.Properties ["customerId"] = App.Customer.Id;
 
 				Debug.WriteLine ("Set customerId to {0}", Application.Current.Properties ["customerId"]);
-
+				await Application.Current.SavePropertiesAsync ();
             }
 			
             App.SuccessfulLoginAction.Invoke();

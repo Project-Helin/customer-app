@@ -19,10 +19,10 @@ namespace customerapp
             var product2 = new Product { Name = "Fanta Orange 0.5 L", Price = 4.0m };
             var product3 = new Product { Name = "Rivella Rot 0.5 L", Price = 4.0m };
 
-            orders.Add(new Order{ Product = product1, OrderTime = DateTime.Now.AddMonths(-4) });
-            orders.Add(new Order{ Product = product2, OrderTime = DateTime.Now.AddMonths(-1) });
-            orders.Add(new Order{ Product = product3, OrderTime = DateTime.Now.AddMonths(-2) });
-            orders.Add(new Order{ Product = product1, OrderTime = DateTime.Now.AddMonths(-6) });
+//            orders.Add(new Order{ Product = product1, OrderTime = DateTime.Now.AddMonths(-4) });
+//            orders.Add(new Order{ Product = product2, OrderTime = DateTime.Now.AddMonths(-1) });
+//            orders.Add(new Order{ Product = product3, OrderTime = DateTime.Now.AddMonths(-2) });
+//            orders.Add(new Order{ Product = product1, OrderTime = DateTime.Now.AddMonths(-6) });
 
             InitializeComponent();
 

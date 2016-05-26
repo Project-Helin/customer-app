@@ -15,7 +15,7 @@ using Xamarin.Auth;
 
 namespace customerapp
 {
-	public class RestService
+	public class RestService : IRestService
 	{
 		HttpClient client;
 
@@ -47,7 +47,6 @@ namespace customerapp
 			// replace is needed to be sure, that double is written xx.zz not xx,zz
 			var uri = new Uri (String.Format(Constants.ApiUrlListProducts, x.Replace(',', '.'), y.Replace(',', '.')));
 			Debug.WriteLine ("URI " + uri);
-
 
 			var response = await client.GetAsync (uri);
 			List<Product> items = new List<Product>();

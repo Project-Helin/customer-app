@@ -20,11 +20,14 @@ namespace customerapp
 			base.OnAppearing ();
 			var hasCustomer = Application.Current.Properties.ContainsKey("customerId");
 
-			if (hasCustomer && App.Customer != null) {
-				RestService rest = new RestService ();
+			var loadCustomer = hasCustomer && App.Customer == null;
+			if (loadCustomer) {
 
 				var customerId = Application.Current.Properties ["customerId"] as string;
-				App.Customer = await rest.GetCustomerById (customerId);	
+				App.Customer = await App.Rest.GetCustomerById (customerId);	
+			} else {
+				Debug.WriteLine ("Not loaded customer because hasCustomer={0} and isCustomerNull = {1}", 
+					loadCustomer, App.Customer == null);
 			}
 
 		}

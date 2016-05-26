@@ -20,7 +20,7 @@ namespace customerapp
         ObservableCollection<Product> products = new ObservableCollection<Product>();
         ObservableCollection<Product> orderedProducts = new ObservableCollection<Product>();
 
-		RestService restService = new RestService();
+		IRestService restService = App.Rest;
 
         public ProductListPage()
         {
