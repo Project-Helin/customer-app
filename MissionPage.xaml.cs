@@ -12,7 +12,10 @@ namespace customerapp
 	public partial class MissionPage : ContentPage
 	{
 
-		private Mission mission; 
+		private Mission mission;
+		Websockets.IWebSocketConnection connection;
+
+ 
 
 		public MissionPage (Mission mission)
 		{
@@ -27,8 +30,6 @@ namespace customerapp
 
 		MapWithRoute initialiseMap(Mission mission){
 			
-
-
 			var map = Map;
 
 			// add all waypoints for route
@@ -48,6 +49,28 @@ namespace customerapp
 			map.MoveToRegion(MapSpan.FromCenterAndRadius(pin.Position, Distance.FromMeters(100)));
 
 			return map;
+		}
+
+
+		protected async override void OnAppearing(){
+			base.OnAppearing ();
+			connection = Websockets.WebSocketFactory.Create();
+			connection.OnOpened += Connection_OnOpened;
+			connection.OnMessage += Connection_OnMessage;
+
+			connection.Open(String.Format(Constants.WsForDroneInfos, mission.Id));
+		}
+
+		private void Connection_OnOpened()
+		{
+			Debug.WriteLine("Opened !");
+		}
+
+		private void Connection_OnMessage(string obj)
+		{
+
+			var message = Newtonsoft.Json.JsonConvert.DeserializeObject <DroneInfoMessage> (obj);
+			Map.CurrentPosition = message.DroneInfo.PhonePosition;
 		}
 
 		Pin createPinForDeliveryPosition(customerapp.Dto.Position position){

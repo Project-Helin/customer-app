@@ -36,7 +36,7 @@ namespace TodoAWSSimpleDB.iOS
                         Constants.ClientSecret,
                         Constants.Scope,
                         new Uri(Constants.AuthorizeUrl),
-                        new Uri(Constants.RedirectUrl),
+                        new Uri(Constants.RedirectUrl), // TODO Kiru fix this
                         new Uri(Constants.AccessTokenUrl));
 
                     // Register an event handler for when the authentication process completes

@@ -39,6 +39,7 @@ namespace customerapp.Droid
                 }
             );
 
+			Websockets.Droid.WebsocketConnection.Link();
 
             LoadApplication(new App());
         }

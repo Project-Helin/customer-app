@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using customerapp.Dto;
 using Android.Gms.Maps;
 using Android.Gms.Maps.Model;
+using Xamarin.Forms.Maps;
+using System.ComponentModel;
 
 [assembly:ExportRenderer (typeof(MapWithRoute), typeof(CustomMapRenderer))]
 namespace MapOverlay.Droid
@@ -15,9 +17,10 @@ namespace MapOverlay.Droid
 	{
 		
 		GoogleMap map;
+		MapWithRoute mapR;
 
-		List<Position> calculatedRoute;
-		List<Position> flownRoute;
+		List<customerapp.Dto.Position> calculatedRoute;
+		List<customerapp.Dto.Position> flownRoute;
 
 		protected override void OnElementChanged (Xamarin.Forms.Platform.Android.ElementChangedEventArgs<View> e)
 		{
@@ -29,11 +32,37 @@ namespace MapOverlay.Droid
 
 			if (e.NewElement != null) {
 				var formsMap = (MapWithRoute)e.NewElement;
+				mapR = formsMap;
 				calculatedRoute = formsMap.CalculatedRoute;
 				flownRoute = formsMap.FlownRoute;
 
+				formsMap.PropertyChanged += OnChange;
+
+
 				((MapView)Control).GetMapAsync (this);
 			}
+		
+		}
+
+		public void OnChange(object o,PropertyChangedEventArgs ar){
+			var polylineOptions = new CircleOptions ();
+			polylineOptions.InvokeFillColor (0x00E5FF00);
+			polylineOptions.InvokeRadius (3);
+			polylineOptions.InvokeCenter (
+				new LatLng(
+					mapR.CurrentPosition.Lat,
+					mapR.CurrentPosition.Lon
+				)
+			);
+			map.AddCircle (polylineOptions);
+
+			var a = new Xamarin.Forms.Maps.Position (
+				polylineOptions.Center.Latitude, 
+				polylineOptions.Center.Longitude
+			);
+		
+			mapR.MoveToRegion(MapSpan.FromCenterAndRadius(a, Distance.FromMeters(1)));
+
 		}
 
 		public void OnMapReady (GoogleMap googleMap)
