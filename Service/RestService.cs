@@ -202,7 +202,13 @@ namespace customerapp
 			{
 				// Deserialize the data and store it in the account store
 				string userJson = response.GetResponseText();
-				return JsonConvert.DeserializeObject<Customer>(userJson, jsonSetting);
+
+				CustomerGoogleDto googleCustomer = JsonConvert.DeserializeObject<CustomerGoogleDto>(userJson, jsonSetting);
+				return new Customer {
+					FamilyName = googleCustomer.FamilyName,
+					GivenName = googleCustomer.GivenName,
+					Email = googleCustomer.Email,
+				};
 			}
 
 			return null;

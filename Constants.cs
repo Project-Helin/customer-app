@@ -25,11 +25,13 @@ namespace customerapp
 		public static string UserInfoUrl = "https://www.googleapis.com/plus/v1/people/me/openIdConnect";
 
         // Set this property to the location the user will be redirected too after successfully authenticating
-        public static string RedirectUrl = "https://blank.org/";
+        public static string RedirectUrl = "https://ifnotelse.com/";
 
-		public static string ApiUrlBase = "http://192.168.188.26:9000";
-		// public static string ApiUrlBase = "http://152.96.233.65:9000";
-		// public static string ApiUrlBase = "http://151.80.44.117:80";
+		// public static string Server = "http://192.168.188.26:9000";
+		public static string Server = "152.96.237.115:9000";
+		// public static string Server = "http://151.80.44.117:80"; // ifnotelse.com
+
+		public static string ApiUrlBase = "http://" + Server;
 		public static string ApiUrlListProducts = ApiUrlBase + "/api/products/find-by-location/{0}/{1}";
 		public static string ApiUrlListProductsAll = ApiUrlBase + "/api/products/";
 		public static string ApiUrlListOrder = ApiUrlBase + "/api/orders/";
@@ -42,5 +44,7 @@ namespace customerapp
 
 		public static string ApiUrlOrdersByCustomer = ApiUrlBase + "/api/orders/find-by-customer/{0}";
 		public static string ApiUrlMissionsByOrder = ApiUrlBase + "/api/missions/find-by-order/{0}";
+
+		public static string WsForDroneInfos = Server + "/api/missions/{0}/ws";
     }
 }
