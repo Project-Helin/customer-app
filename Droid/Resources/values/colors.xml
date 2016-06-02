@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <color name="helintheme_color">#3c8dbc</color>
-    <color name="helintheme_color_dark">#367fa9</color>
-    <color name="button_color">#3c8dbc</color>
-	<color name="helintheme_text_color">#000000</color>
-	<color name="helintheme_windowBackground">#FFFFFF</color>
-
-</resources>

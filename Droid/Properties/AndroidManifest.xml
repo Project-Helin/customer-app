@@ -21,15 +21,10 @@
 	<uses-permission
 		android:name="android.permission.INTERNET" />
 	<application
-		android:label="project helin"
-		android:theme="@style/HelinTheme">
-<!--		<meta-data
-			android:name="com.google.android.geo.API_KEY"
-			android:value="AIzaSyAc0DiLABEAdGciJuQK3CbhUkae0-0nbWk" />-->
+		android:label="project helin">
 		<meta-data
 			android:name="com.google.android.geo.API_KEY"
 			android:value="AIzaSyAYolXpuGXy7LWoPX1EkxEtCQZEruoxhJM" />	
-
 
 		<meta-data
 			android:name="com.google.android.gms.version"

@@ -10,14 +10,17 @@ using Android.OS;
 using PayPal.Forms;
 using PayPal.Forms.Abstractions;
 using PayPal.Forms.Abstractions.Enum;
+using Xamarin.Forms.Platform.Android;
 
 namespace customerapp.Droid
 {
-    [Activity(Label = "customer-app.Droid", Icon = "@drawable/icon", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
-	public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
+    [Activity(Label = "customer-app.Droid", Icon = "@drawable/icon", Theme = "@style/HelinTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+	public class MainActivity : FormsAppCompatActivity
     {
         protected override void OnCreate(Bundle bundle)
         {
+            FormsAppCompatActivity.ToolbarResource = Resource.Layout.toolbar;
+
             base.OnCreate(bundle);
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
