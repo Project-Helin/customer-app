@@ -11,11 +11,7 @@ namespace customerapp
 {
 	public class MockRestService : IRestService
 	{
-		public MockRestService ()
-		{
-		}
-
-		public Task<List<Product>> GetAllProducts ()
+        public Task<List<Product>> GetAllProductsByLocation (Position customerPosition)
 		{
 			Debug.WriteLine ("GetAllProducts");
 
@@ -145,7 +141,7 @@ namespace customerapp
 		}
 
 
-		public Task<Order> CreateOrder (ICollection<Product> orderProducts)
+        public Task<Order> CreateOrder (ICollection<Product> orderProducts, Position customerPosition)
 		{
 			Debug.WriteLine ("CreateOrder");
 			var waypoints = new List<Waypoint> ();

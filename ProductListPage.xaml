@@ -4,20 +4,6 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 	x:Class="customerapp.ProductListPage">
 	<StackLayout>
-
-            <ActivityIndicator IsVisible="false"
-                               IsRunning="false"
-                               Color="Black"
-                               VerticalOptions="CenterAndExpand"
-                               HorizontalOptions="CenterAndExpand"
-                               RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent,
-                                        Property=Height,
-                                        Factor=0.33}"
-                               RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent,
-                                        Property=Height,
-                                        Factor=0.33}" />
-
-<!--		<ActivityIndicator Color="Red" IsRunning="true" />-->
 		<ListView x:Name="ProductListView" RowHeight="60" VerticalOptions="FillAndExpand">
 			<ListView.ItemTemplate>
 				<DataTemplate >
@@ -47,16 +33,18 @@
 		</ListView>
 
 		<StackLayout 
-			HorizontalOptions="Center"
+			HorizontalOptions="FillAndExpand"
 			VerticalOptions="EndAndExpand">
 			<Label 
 				Text="Total: 0.00 CHF"
 				x:Name="TotalAmount" 
+				HorizontalOptions="Center"
 				FontSize="Small" />
 			<Button
 		    	x:Name="SendOrderButton"
 		    	IsEnabled="false"
 				Text="Send order"
+				HorizontalOptions="FillAndExpand"
 				Clicked="OnOrderButtonClick" />
 		</StackLayout>
 

@@ -14,7 +14,6 @@ namespace customerapp
         public MainPage () 
         {
             InitializeComponent();
-
         }
 
 		protected async override void OnAppearing(){
@@ -26,8 +25,9 @@ namespace customerapp
         private async Task loadCustomerIfAvailable(){
             var customerId = Settings.GetCustomerIdOrNull ();
 
-            var noCustomerAvailable =  !string.IsNullOrWhiteSpace(customerId) && App.Customer == null;
-            if (noCustomerAvailable) {
+            var noCustomerAvailable =  !App.IsLoggedIn;
+
+            if (App.IsLoggedIn) {
                 App.Customer = await App.Rest.GetCustomerById (customerId); 
             } else {
                 Debug.WriteLine ("No customer loaded because hasCustomer={0} and isCustomerNull = {1}", 

@@ -27,11 +27,11 @@ namespace customerapp
         // Set this property to the location the user will be redirected too after successfully authenticating
         public static string RedirectUrl = "https://ifnotelse.com/";
 
-		public static string Server = "152.96.239.213:9000";
+        public static string Server = "192.168.188.26:9000";
 		// public static string Server = "http://151.80.44.117:80"; // ifnotelse.com
 
 		public static string ApiUrlBase = "http://" + Server;
-		public static string ApiUrlListProducts = ApiUrlBase + "/api/products/find-by-location/{0}/{1}";
+        public static string ApiUrlListProducts = ApiUrlBase + "/api/products/?lat={0}&lon={1}";
 		public static string ApiUrlListProductsAll = ApiUrlBase + "/api/products/";
 		public static string ApiUrlListOrder = ApiUrlBase + "/api/orders/";
 

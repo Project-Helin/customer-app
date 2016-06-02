@@ -36,14 +36,12 @@ namespace customerapp
 			client = new HttpClient ();
 		}
 
-		public async Task<List<Product>> GetAllProducts ()
+        public async Task<List<Product>> GetAllProductsByLocation (Position customerPosition)
 		{
 			Debug.WriteLine ("Fetch order ");
 
-			var position = await GetPosition ();
-
-			string x = position.Lat.ToString();
-			string y = position.Lon.ToString();
+            string x = customerPosition.Lat.ToString();
+            string y = customerPosition.Lon.ToString();
 
 			// replace is needed to be sure, that double is written xx.zz not xx,zz
 			var uri = new Uri (String.Format(Constants.ApiUrlListProducts, x.Replace(',', '.'), y.Replace(',', '.')));
@@ -103,28 +101,6 @@ namespace customerapp
 		}
 
 
-		async Task<customerapp.Dto.Position> GetPosition ()
-		{
-
-			Plugin.Geolocator.Abstractions.Position pos = null;
-			Debug.WriteLine ("Try to get current position");
-			try{
-				var locator = CrossGeolocator.Current;
-				pos = await locator.GetPositionAsync (timeoutMilliseconds: 100000);	
-			}catch(Exception e){
-				
-				Debug.WriteLine ("Got positoin ", e);
-				return null;
-			}
-
-
-			customerapp.Dto.Position p = new customerapp.Dto.Position ();
-			p.Lat= pos.Latitude;
-			p.Lon = pos.Longitude;				
-
-			Debug.WriteLine ("Got position");
-			return p;
-		}
 
 		public async Task ConfirmOrder(String orderId, String customerId){
 			var uri = new Uri (string.Format(Constants.ApiUrlConfirmOrder, orderId, customerId));
@@ -143,16 +119,15 @@ namespace customerapp
 		
 		}
 
-		public async Task<Order> CreateOrder (ICollection<Product> orderProducts)
+        public async Task<Order> CreateOrder (ICollection<Product> orderProducts, Position customerPosition)
 		{
 			var uri = new Uri (Constants.ApiUrlListOrder);
 			Debug.WriteLine ("URI " + uri);
 
-			var position = await GetPosition();
 			var projectId = getProjectId (orderProducts);
 
 			var request = new {
-				customerPosition = position,
+                customerPosition = customerPosition,
 				projectId = projectId,
 				orderProducts = orderProducts
 			};

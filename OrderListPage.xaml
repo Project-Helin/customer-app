@@ -13,9 +13,6 @@
 						<StackLayout
 							Orientation="Horizontal"
 							Padding="10">
-<!--							<Label
-								Text="{Binding CreatedAt,  StringFormat='{0:MMMM dd, yyyy}'}"
-								HorizontalOptions="End" />-->
 							<Label
 								Text="{Binding State}"
 								HorizontalOptions="End" />

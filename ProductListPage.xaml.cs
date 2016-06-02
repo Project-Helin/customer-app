@@ -21,8 +21,6 @@ namespace customerapp
         ObservableCollection<Product> products = new ObservableCollection<Product>();
         ObservableCollection<Product> orderedProducts = new ObservableCollection<Product>();
 
-		IRestService restService = App.Rest;
-
         public ProductListPage()
         {
             InitializeComponent();
@@ -33,18 +31,20 @@ namespace customerapp
 		protected async override void OnAppearing(){
 			base.OnAppearing ();
 
-			// UserDialogs.Instance.SuccessToast ("asb",  "bbbbb", 1000);
-			// UserDialogs.Instance.ShowSuccess ("asb", 1000);
-			UserDialogs.Instance.ShowLoading ();
-
-
 			orderedProducts.Clear ();
 			products.Clear ();
 
 			Button button = this.FindByName<Button> ("SendOrderButton");
 			button.IsEnabled = false;
 
-			var productsFromServer = await restService.GetAllProducts();
+
+            var position = await PositionHelper.GetPosition ();
+
+
+			UserDialogs.Instance.ShowLoading ("Loading available products");
+            var productsFromServer = await App.Rest.GetAllProductsByLocation(position);
+			UserDialogs.Instance.HideLoading ();
+
 			foreach (Product each in productsFromServer) {
 				products.Add (each);
 			}
@@ -54,8 +54,6 @@ namespace customerapp
 
 		void ProductTapped(object sender, ItemTappedEventArgs e)
         {
-
-
 
             Product selectedProduct = e.Item as Product;
 			selectedProduct.Amount += 1;
@@ -96,7 +94,10 @@ namespace customerapp
 
             if (orderConfirmed)
             {
-				Order response = await restService.CreateOrder(orderedProducts);
+				UserDialogs.Instance.ShowLoading ("Get drop position");
+                Order response = await App.Rest.CreateOrder(orderedProducts, null);
+				UserDialogs.Instance.HideLoading ();
+
 				Debug.WriteLine ("Created order with id {0}", response.Id); 
 
 				await Navigation.PushModalAsync(new OrderConfirmPage(response));

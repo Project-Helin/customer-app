@@ -8,7 +8,7 @@ namespace customerapp
 {
 	public interface IRestService
 	{
-		Task<List<Product>> GetAllProducts ();
+        Task<List<Product>> GetAllProductsByLocation (Position customerPosition);
 
 		Task<List<Order>> GetAllOrders (String customerId);
 
@@ -16,7 +16,7 @@ namespace customerapp
 
 		Task ConfirmOrder(String orderId, String customerId);
 
-		Task<Order> CreateOrder (ICollection<Product> orderProducts);
+        Task<Order> CreateOrder (ICollection<Product> orderProducts, Position customerPosition);
 
 		Task DeleteOrder (string orderId);
 
