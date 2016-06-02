@@ -11,6 +11,7 @@ using PayPal.Forms.Abstractions;
 using PayPal.Forms.Abstractions.Enum;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Acr.UserDialogs;
 
 
 namespace customerapp
@@ -32,6 +33,11 @@ namespace customerapp
 		protected async override void OnAppearing(){
 			base.OnAppearing ();
 
+			// UserDialogs.Instance.SuccessToast ("asb",  "bbbbb", 1000);
+			// UserDialogs.Instance.ShowSuccess ("asb", 1000);
+			UserDialogs.Instance.ShowLoading ();
+
+
 			orderedProducts.Clear ();
 			products.Clear ();
 
@@ -48,6 +54,9 @@ namespace customerapp
 
 		void ProductTapped(object sender, ItemTappedEventArgs e)
         {
+
+
+
             Product selectedProduct = e.Item as Product;
 			selectedProduct.Amount += 1;
 

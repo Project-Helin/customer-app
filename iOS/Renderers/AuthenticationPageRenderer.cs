@@ -18,7 +18,7 @@ namespace TodoAWSSimpleDB.iOS
     public class AuthenticationPageRenderer : PageRenderer
     {
         bool isShown;
-		IRestService rest = App.Rest;
+	IRestService rest = App.Rest;
 
         public override void ViewDidAppear(bool animated)
         {
@@ -60,9 +60,8 @@ namespace TodoAWSSimpleDB.iOS
         {
             if (e.IsAuthenticated)
             {
-				App.Customer = await rest.GetCustomerInfo (e.Account);
-				App.Customer = await rest.SaveCustomer (App.Customer);
-
+				App.Customer = await App.Rest.GetCustomerInfo (e.Account);
+				App.Customer = await App.Rest.SaveCustomer (App.Customer);
 				Settings.SetCustomerId (App.Customer.Id);
 
             }

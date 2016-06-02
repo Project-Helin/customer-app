@@ -31,6 +31,7 @@ namespace MapOverlay.iOS
 				nativeMap.OverlayRenderer = GetOverlayRenderer;
 
 //				CLLocationCoordinate2D[] coords = new CLLocationCoordinate2D[formsMap.RouteCoordinates.Count];
+//				GetOverlayRenderer	CLLocationCoordinate2D[] coords = new CLLocationCoordinate2D[formsMap.RouteCoordinates.Count];
 //
 //				int index = 0;
 //				foreach (var position in formsMap.RouteCoordinates) {
