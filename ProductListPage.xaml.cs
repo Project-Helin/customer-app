@@ -28,29 +28,42 @@ namespace customerapp
 			ProductListView.ItemTapped += ProductTapped;
         }
 
-		protected async override void OnAppearing(){
+		protected async override void OnAppearing()
+        {
 			base.OnAppearing ();
 
-			orderedProducts.Clear ();
-			products.Clear ();
-
-			Button button = this.FindByName<Button> ("SendOrderButton");
-			button.IsEnabled = false;
-
-
-            var position = await PositionHelper.GetPosition ();
-
-
-			UserDialogs.Instance.ShowLoading ("Loading available products");
-            var productsFromServer = await App.Rest.GetAllProductsByLocation(position);
-			UserDialogs.Instance.HideLoading ();
-
-			foreach (Product each in productsFromServer) {
-				products.Add (each);
-			}
-
-			setTotalAmout (0);
+            ResetElements ();
+            await LoadProducts ();
 		}
+
+        private void ResetElements()
+        {
+            orderedProducts.Clear ();
+            products.Clear ();
+
+            Button button = this.FindByName<Button> ("SendOrderButton");
+            button.IsEnabled = false;
+
+            setTotalAmout (0);
+        }
+
+        private async Task LoadProducts()
+        {
+            var customerPosition = await PositionHelper.GetPositionOrNull (this);
+
+            if (customerPosition != null) {
+                UserDialogs.Instance.ShowLoading ("Loading available products");
+
+                var productsFromServer = 
+                    await App.Rest.GetAllProductsByLocation (customerPosition);
+                
+                UserDialogs.Instance.HideLoading ();
+
+                foreach (Product each in productsFromServer) {
+                    products.Add (each);
+                }
+            } 
+        }
 
 		void ProductTapped(object sender, ItemTappedEventArgs e)
         {

@@ -13,6 +13,7 @@ using Xamarin.Forms;
 using Plugin.Geolocator;
 using Xamarin.Auth;
 using Newtonsoft.Json.Converters;
+using Acr.UserDialogs;
 
 namespace customerapp
 {
@@ -43,22 +44,39 @@ namespace customerapp
             string x = customerPosition.Lat.ToString();
             string y = customerPosition.Lon.ToString();
 
-			// replace is needed to be sure, that double is written xx.zz not xx,zz
-			var uri = new Uri (String.Format(Constants.ApiUrlListProducts, x.Replace(',', '.'), y.Replace(',', '.')));
-			Debug.WriteLine ("URI " + uri);
+            // replace is needed to be sure, that double is written xx.zz not xx,zz
+            var response = await DoGetRequestWithErrorHandling (
+                Constants.ApiUrlListProducts, 
+                x.Replace(',', '.'), 
+                y.Replace(',', '.')
+            );
 
-			var response = await client.GetAsync (uri);
-			List<Product> items = new List<Product>();
-			
-			if (response.IsSuccessStatusCode) {
+            if (response != null && response.IsSuccessStatusCode) {
 				var content = await response.Content.ReadAsStringAsync ();
-				items = Newtonsoft.Json.JsonConvert.DeserializeObject <List<Product>> (content);
+				return Newtonsoft.Json.JsonConvert.DeserializeObject <List<Product>> (content);
 			} else {
-				Debug.WriteLine ("Failed to get all order with status code " + response.StatusCode);
+                return new List<Product>();
 			}
-
-			return items;
 		}
+
+        private async Task<HttpResponseMessage> DoGetRequestWithErrorHandling(string urlWithParam, params object[] param){
+            var uri = new Uri (String.Format(urlWithParam, param));
+
+            try{
+                var response = await client.GetAsync (uri);
+
+                if(!response.IsSuccessStatusCode){
+                    Debug.WriteLine ("Request Failed to url {0} and response code {1}", uri, response.StatusCode);
+                    return null;
+                }else{
+                    return response;    
+                }
+            } catch(Exception ex){
+                UserDialogs.Instance.ShowError ("Failed to reach server. Reason: " + ex.Message);
+                Debug.WriteLine ("Request Failed to url {0}", uri);
+                return null;
+            }
+        }
 
 		public async Task<List<Order>> GetAllOrders (String customerId)
 		{
@@ -99,8 +117,6 @@ namespace customerapp
 
 			return items;
 		}
-
-
 
 		public async Task ConfirmOrder(String orderId, String customerId){
 			var uri = new Uri (string.Format(Constants.ApiUrlConfirmOrder, orderId, customerId));
