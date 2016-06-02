@@ -28,7 +28,7 @@ namespace customerapp
         public static string RedirectUrl = "https://ifnotelse.com/";
 
 		// public static string Server = "http://192.168.188.26:9000";
-		public static string Server = "152.96.237.115:9000";
+		public static string Server = "152.96.239.213:9000";
 		// public static string Server = "http://151.80.44.117:80"; // ifnotelse.com
 
 		public static string ApiUrlBase = "http://" + Server;

@@ -7,6 +7,7 @@ using UIKit;
 using PayPal.Forms;
 using PayPal.Forms.Abstractions;
 using PayPal.Forms.Abstractions.Enum;
+using Xamarin.Forms;
 
 namespace customerapp.iOS
 {
@@ -35,6 +36,8 @@ namespace customerapp.iOS
             );
 
             LoadApplication(new App());
+
+
 
             return base.FinishedLaunching(app, options);
         }

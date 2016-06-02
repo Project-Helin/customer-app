@@ -105,17 +105,24 @@ namespace customerapp
 
 		async Task<customerapp.Dto.Position> GetPosition ()
 		{
-			// TODO handle failure if position is not switched on 
 
+			Plugin.Geolocator.Abstractions.Position pos = null;
 			Debug.WriteLine ("Try to get current position");
-			var locator = CrossGeolocator.Current;
-			var pos = await locator.GetPositionAsync (timeoutMilliseconds: 100000);
+			try{
+				var locator = CrossGeolocator.Current;
+				pos = await locator.GetPositionAsync (timeoutMilliseconds: 100000);	
+			}catch(Exception e){
+				
+				Debug.WriteLine ("Got positoin ", e);
+				return null;
+			}
+
 
 			customerapp.Dto.Position p = new customerapp.Dto.Position ();
 			p.Lat= pos.Latitude;
 			p.Lon = pos.Longitude;				
 
-			Debug.WriteLine ("Got positoin");
+			Debug.WriteLine ("Got position");
 			return p;
 		}
 

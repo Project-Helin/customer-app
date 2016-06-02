@@ -10,6 +10,8 @@ using Android.OS;
 using PayPal.Forms;
 using PayPal.Forms.Abstractions;
 using PayPal.Forms.Abstractions.Enum;
+using Xamarin.Forms;
+using Acr.UserDialogs;
 
 namespace customerapp.Droid
 {
@@ -40,6 +42,11 @@ namespace customerapp.Droid
             );
 
 			Websockets.Droid.WebsocketConnection.Link();
+
+			// for Toast messages
+			// see https://github.com/aritchie/userdialogs
+			UserDialogs.Init(this);
+
 
             LoadApplication(new App());
         }

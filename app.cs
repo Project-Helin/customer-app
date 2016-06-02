@@ -11,7 +11,7 @@ namespace customerapp
 
         public static Customer Customer { get; set; }
 
-		public static IRestService Rest = new RestService();
+		public static IRestService Rest = new MockRestService();
 
         public static bool IsLoggedIn
         { 
@@ -59,6 +59,8 @@ namespace customerapp
         {
             
 			// Handle when your app starts
+
+
 
         }
 

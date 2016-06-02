@@ -30,17 +30,17 @@ namespace MapOverlay.iOS
 
 				nativeMap.OverlayRenderer = GetOverlayRenderer;
 
-				CLLocationCoordinate2D[] coords = new CLLocationCoordinate2D[formsMap.RouteCoordinates.Count];
-
-				int index = 0;
-				foreach (var position in formsMap.RouteCoordinates) {
-					coords [index] = new CLLocationCoordinate2D (position.Lat, position.Lon);
-					index++;
-				}
-
-				var routeOverlay = MKPolyline.FromCoordinates (coords);
-
-				nativeMap.AddOverlay (routeOverlay);
+//				GetOverlayRenderer	CLLocationCoordinate2D[] coords = new CLLocationCoordinate2D[formsMap.RouteCoordinates.Count];
+//
+//				int index = 0;
+//				foreach (var position in formsMap.RouteCoordinates) {
+//					coords [index] = new CLLocationCoordinate2D (position.Lat, position.Lon);
+//					index++;
+//				}
+//
+//				var routeOverlay = MKPolyline.FromCoordinates (coords);
+//
+//				nativeMap.AddOverlay (routeOverlay);
 			}
 		}
 

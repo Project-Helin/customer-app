@@ -4,6 +4,20 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 	x:Class="customerapp.ProductListPage">
 	<StackLayout>
+
+            <ActivityIndicator IsVisible="false"
+                               IsRunning="false"
+                               Color="Black"
+                               VerticalOptions="CenterAndExpand"
+                               HorizontalOptions="CenterAndExpand"
+                               RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent,
+                                        Property=Height,
+                                        Factor=0.33}"
+                               RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent,
+                                        Property=Height,
+                                        Factor=0.33}" />
+
+<!--		<ActivityIndicator Color="Red" IsRunning="true" />-->
 		<ListView x:Name="ProductListView" RowHeight="60" VerticalOptions="FillAndExpand">
 			<ListView.ItemTemplate>
 				<DataTemplate >
