@@ -26,12 +26,12 @@
 		<StackLayout>
 			<Button
 				Text="Show available products"
-				HorizontalOptions="Center"
+				HorizontalOptions="FillAndExpand"
 				VerticalOptions="CenterAndExpand"
 				Clicked="OnShowProductButtonClick" />
 			<Button
 				Text="Show my orders"
-				HorizontalOptions="Center"
+				HorizontalOptions="FillAndExpand"
 				VerticalOptions="CenterAndExpand"
 				Clicked="OnShowOrdersClick" />
 		</StackLayout>
