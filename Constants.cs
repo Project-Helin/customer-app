@@ -10,21 +10,42 @@ namespace customerapp
         public static string ClientSecret = "zQa7y0KSf0TSPgJv7uDJ_PUT";
 
         // These values do not need changing
-        public static string Scope = "https://www.googleapis.com/auth/userinfo.email";
         public static string AuthorizeUrl = "https://accounts.google.com/o/oauth2/auth";
         public static string AccessTokenUrl = "https://accounts.google.com/o/oauth2/token";
-        public static string UserInfoUrl = "https://www.googleapis.com/oauth2/v2/userinfo";
+
+		/**
+		 * See https://developers.google.com/+/web/api/rest/oauth#profile
+		 * for more information what the meaning of the scope is.
+		 */
+		public static string Scope = "profile email";
+		/** 
+		 * See https://developers.google.com/+/web/api/rest/openidconnect/getOpenIdConnect 
+		 * for more information
+		 */
+		public static string UserInfoUrl = "https://www.googleapis.com/plus/v1/people/me/openIdConnect";
 
         // Set this property to the location the user will be redirected too after successfully authenticating
         public static string RedirectUrl = "https://blank.org/";
 
+<<<<<<< HEAD
 		public static string ApiUrlBase = "http://152.96.233.42:9000";
 		// public static string ApiUrlBase = "http://152.96.236.122:9000";
+=======
+		public static string ApiUrlBase = "http://192.168.188.26:9000";
+		// public static string ApiUrlBase = "http://152.96.233.65:9000";
+>>>>>>> 18817f30a4ae7746f418493fdbadbe7c8c9d4a39
 		// public static string ApiUrlBase = "http://151.80.44.117:80";
 		public static string ApiUrlListProducts = ApiUrlBase + "/api/products/find-by-location/{0}/{1}";
 		public static string ApiUrlListProductsAll = ApiUrlBase + "/api/products/";
 		public static string ApiUrlListOrder = ApiUrlBase + "/api/orders/";
-		public static string ApiUrlConfirmOrder = ApiUrlBase + "/api/orders/{0}/confirm";
-		public static string ApiUrlCancelOrder = ApiUrlBase + "/api/orders/{0}/cancel";
+
+		public static string ApiUrlConfirmOrder = ApiUrlBase + "/api/orders/{0}/confirm/{1}";
+		public static string ApiUrlDeleteOrder = ApiUrlBase + "/api/orders/{0}/delete";
+
+		public static string ApiUrlSaveCustomer = ApiUrlBase + "/api/customers/save";
+		public static string ApiUrlCustomerFind = ApiUrlBase + "/api/customers/{0}";
+
+		public static string ApiUrlOrdersByCustomer = ApiUrlBase + "/api/orders/find-by-customer/{0}";
+		public static string ApiUrlMissionsByOrder = ApiUrlBase + "/api/missions/find-by-order/{0}";
     }
 }

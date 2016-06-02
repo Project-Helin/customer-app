@@ -5,15 +5,16 @@ namespace customerapp.Dto
 {
     public class Order
     {
-        public Position DeliveryPosition{ get; set;}
-        public DateTime OrderTime { get; set; }
-        public Product Product { get; set; }
+		
+		public String Id { get; set; }
 
-		public List<Product> Products {
-			get;
-			set;
-		}
-           
+//		public DateTime CreatedAt { set; get; }
+
+		public List<Mission> Missions { get; set; }
+
+		public List<OrderProduct> OrderProducts { get; set; }
+		   
+		public String State{ get; set; }
     }
 }
 

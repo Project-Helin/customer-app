@@ -9,13 +9,12 @@ namespace customerapp
     public class OrderConfirmPage : ContentPage
     {
 
-		private OrderApiOutput orderApiOutput; 
+		private Order order; 
 
-		public OrderConfirmPage(OrderApiOutput orderApiOutput)
+		public OrderConfirmPage(Order order)
         {
-			this.orderApiOutput = orderApiOutput;
-
-			var map = initialiseMap (orderApiOutput);
+			this.order = order;
+			var map = initialiseMap (order);
 
 			Button button = new Button
 			{
@@ -34,7 +33,7 @@ namespace customerapp
             Content = stack;
         }
 
-		MapWithRoute initialiseMap(OrderApiOutput orderApiOutput){
+		MapWithRoute initialiseMap(Order orderApiOutput){
 			
 			var map = new MapWithRoute(){
 				IsShowingUser = true,
@@ -71,7 +70,8 @@ namespace customerapp
 		{
 			
 			RestService rest = new RestService ();
-			await rest.ConfirmOrder (orderApiOutput.orderId);
+			await rest.ConfirmOrder (orderApiOutput.id);
+
 			// TODO change to another page 
 			var stack = new StackLayout { Spacing = 0 };
 			stack.Children.Add(initialiseMap(orderApiOutput));

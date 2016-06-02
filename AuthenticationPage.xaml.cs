@@ -11,6 +11,7 @@ namespace customerapp
         {
             //Rendereres in Droid and customer App are used to render auth pages
             InitializeComponent();
+
         }
     }
 }

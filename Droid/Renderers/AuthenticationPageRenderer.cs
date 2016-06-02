@@ -18,6 +18,8 @@ namespace TodoAWSSimpleDB.Droid
     {
         bool isShown;
 
+		IRestService rest = App.Rest;
+
         protected override void OnElementChanged(ElementChangedEventArgs<Page> e)
         {
             base.OnElementChanged(e);
@@ -35,7 +37,8 @@ namespace TodoAWSSimpleDB.Droid
                         Constants.Scope,
                         new Uri(Constants.AuthorizeUrl),
                         new Uri(Constants.RedirectUrl),
-                        new Uri(Constants.AccessTokenUrl));
+                        new Uri(Constants.AccessTokenUrl)
+					);
 
                     auth.Completed += OnAuthenticationCompleted;
 
@@ -54,21 +57,17 @@ namespace TodoAWSSimpleDB.Droid
 
         async void OnAuthenticationCompleted(object sender, AuthenticatorCompletedEventArgs e)
         {
-            if (e.IsAuthenticated)
-            {
-                // If the user is authenticated, request their basic user data from Google
-                // UserInfoUrl = https://www.googleapis.com/oauth2/v2/userinfo
-                var request = new OAuth2Request("GET", new Uri(Constants.UserInfoUrl), null, e.Account);
-                var response = await request.GetResponseAsync();
-                if (response != null)
-                {
-                    // Deserialize the data and store it in the account store
-                    string userJson = response.GetResponseText();
-                    Console.WriteLine(JsonConvert.DeserializeObject<Customer>(userJson));
-                    App.Customer = JsonConvert.DeserializeObject<Customer>(userJson);
-                }
-            }
-            App.SuccessfulLoginAction.Invoke();
+			if (e.IsAuthenticated)
+			{
+				App.Customer = await rest.GetCustomerInfo (e.Account);
+				App.Customer = await rest.SaveCustomer (App.Customer);
+
+				Settings.SetCustomerId (App.Customer.Id);
+
+				System.Diagnostics.Debug.WriteLine ("Set customerId to {0}", Settings.GetCustomerIdOrNull());
+			}
+
+			App.SuccessfulLoginAction.Invoke();
         }
     }
 }

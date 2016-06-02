@@ -18,9 +18,7 @@ namespace customerapp.Dto
             }
         }
 
-		public String id { get; set; }
-
-		private String abc;
+		public String Id { get; set; }
 
 		public String Name{ get; set; }
 

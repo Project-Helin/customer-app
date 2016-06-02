@@ -20,7 +20,7 @@ namespace customerapp
         ObservableCollection<Product> products = new ObservableCollection<Product>();
         ObservableCollection<Product> orderedProducts = new ObservableCollection<Product>();
 
-		RestService restService = new RestService();
+		IRestService restService = App.Rest;
 
         public ProductListPage()
         {
@@ -74,48 +74,49 @@ namespace customerapp
 
 		void setTotalAmout(decimal totalAmout){
 			Label totalAmountLabel = this.FindByName<Label> ("TotalAmount");
-			totalAmountLabel.Text = "Total: " + totalAmout + " CHF";
+			totalAmountLabel.Text = "Total: " + string.Format("{0:0.00}", totalAmout)  + " CHF";
 		}
 
 
         async void OnOrderButtonClick(object sender, EventArgs args)
         {
             var orderSum = orderedProducts.Sum((a) => a.Amount * a.Price);
-            var orderConfirmed = await DisplayAlert("Produkt Kaufen?", "Möchten Sie die Bestellung im Wert von " + orderSum + " CHF abschicken?", "Ja", "Nein");
+
+            var orderConfirmed = await DisplayAlert("Buy products?", 
+				"Are you sure to order for " + string.Format("{0:0.00}", orderSum) + " CHF?", "Yes", "No");
 
             if (orderConfirmed)
             {
-        
-				// let user pay the order ... 
-//                var result = await CrossPayPalManager.Current.Buy(new PayPalItem("Order 123", (Decimal) orderSum, "CHF"), new Decimal(0));
-//                if (result.Status == PayPalStatus.Cancelled)
-//                {
-//                    Debug.WriteLine("Cancelled");
-//                }
-//                else if (result.Status == PayPalStatus.Error)
-//                {
-//                    Debug.WriteLine(result.ErrorMessage);
-//                }
-//                else if (result.Status == PayPalStatus.Successful)
-//                {
-//                    Debug.WriteLine("Payment Successful");
-//                    Debug.WriteLine(result.ServerResponse.Response.Id);
-//                }
+				Order response = await restService.CreateOrder(orderedProducts);
+				Debug.WriteLine ("Created order with id {0}", response.Id); 
 
-				// send the order
-				Debug.WriteLine("Payment Successful");
-				// get Location 
-
-				// send order
-				var response = await restService.CreateOrder(orderedProducts);
-				var deliveryPosition = response.DeliveryPosition;
-				Debug.WriteLine (deliveryPosition); 
-
-				await Navigation.PushAsync(new OrderConfirmPage(response));
-
+				await Navigation.PushModalAsync(new OrderConfirmPage(response));
             }
-          
         }
+
+		/* 
+		 * TODO
+		 */
+		void payment(){
+			// send the order
+			Debug.WriteLine("Payment Successful");
+			// let user pay the order ... 
+			//                var result = await CrossPayPalManager.Current.Buy(new PayPalItem("Order 123", (Decimal) orderSum, "CHF"), new Decimal(0));
+			//                if (result.Status == PayPalStatus.Cancelled)
+			//                {
+			//                    Debug.WriteLine("Cancelled");
+			//                }
+			//                else if (result.Status == PayPalStatus.Error)
+			//                {
+			//                    Debug.WriteLine(result.ErrorMessage);
+			//                }
+			//                else if (result.Status == PayPalStatus.Successful)
+			//                {
+			//                    Debug.WriteLine("Payment Successful");
+			//                    Debug.WriteLine(result.ServerResponse.Response.Id);
+			//                }
+
+		}
 		    
     }
 }

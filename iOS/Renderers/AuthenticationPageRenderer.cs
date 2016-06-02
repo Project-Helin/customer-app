@@ -7,6 +7,8 @@ using Xamarin.Auth;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 using customerapp;
+using System.Diagnostics;
+using Plugin.Settings;
 
 [assembly: ExportRenderer(typeof(AuthenticationPage), typeof(AuthenticationPageRenderer))]
 
@@ -16,6 +18,7 @@ namespace TodoAWSSimpleDB.iOS
     public class AuthenticationPageRenderer : PageRenderer
     {
         bool isShown;
+		RestService rest = App.Rest;
 
         public override void ViewDidAppear(bool animated)
         {
@@ -33,7 +36,7 @@ namespace TodoAWSSimpleDB.iOS
                         Constants.ClientSecret,
                         Constants.Scope,
                         new Uri(Constants.AuthorizeUrl),
-                        new Uri(Constants.RedirectUrl),
+                        new Uri(Constants.RedirectUrl), // TODO Kiru fix this
                         new Uri(Constants.AccessTokenUrl));
 
                     // Register an event handler for when the authentication process completes
@@ -57,16 +60,11 @@ namespace TodoAWSSimpleDB.iOS
         {
             if (e.IsAuthenticated)
             {
-                // If the user is authenticated, request their basic user data from Google
-                // UserInfoUrl = https://www.googleapis.com/oauth2/v2/userinfo
-                var request = new OAuth2Request("GET", new Uri(Constants.UserInfoUrl), null, e.Account);
-                var response = await request.GetResponseAsync();
-                if (response != null)
-                {
-                    // Deserialize the data and store it 
-                    string userJson = response.GetResponseText();
-                    App.Customer = JsonConvert.DeserializeObject<Customer>(userJson);
-                }
+				App.Customer = await rest.GetCustomerInfo (e.Account);
+				App.Customer = await rest.SaveCustomer (App.Customer);
+
+				Settings.SetCustomerId (App.Customer.Id);
+
             }
 			
             App.SuccessfulLoginAction.Invoke();

@@ -1,14 +1,17 @@
 ﻿using System;
 
 using Xamarin.Forms;
+using System.Diagnostics;
 
 namespace customerapp
 {
     public class App : Application
     {
-        static NavigationPage NavPage;
+        public static NavigationPage NavPage;
 
         public static Customer Customer { get; set; }
+
+		public static IRestService Rest = new RestService();
 
         public static bool IsLoggedIn
         { 
@@ -32,7 +35,9 @@ namespace customerapp
                     { 
                         if (IsLoggedIn)
                         {
-                            NavPage.Navigation.PopModalAsync();    
+
+							Debug.WriteLine ("Customer successfully logged in");
+							NavPage.Navigation.PopModalAsync();    
                         }
                     });
             }
@@ -40,15 +45,21 @@ namespace customerapp
 
         public App()
         {
-            // The root page of your application
-            MainPage = NavPage = new NavigationPage(new MainPage());
+			// The root page of your application
+			MainPage = NavPage = new NavigationPage(new MainPage());
+
+			Debug.WriteLine ("Here customer is " + Customer);
             //User shouldnt to have to login in order to see Products
             //NavPage.Navigation.PushModalAsync(new AuthenticationPage());
+
+
         }
 
         protected override void OnStart()
         {
-            // Handle when your app starts
+            
+			// Handle when your app starts
+
         }
 
         protected override void OnSleep()
