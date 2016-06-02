@@ -18,7 +18,7 @@ namespace TodoAWSSimpleDB.iOS
     public class AuthenticationPageRenderer : PageRenderer
     {
         bool isShown;
-		RestService rest = App.Rest;
+		IRestService rest = App.Rest;
 
         public override void ViewDidAppear(bool animated)
         {
