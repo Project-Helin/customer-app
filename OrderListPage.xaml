@@ -16,6 +16,9 @@
 							<Label
 								Text="{Binding State}"
 								HorizontalOptions="End" />
+                            <Label
+                                Text="{Binding Missions.Count}"
+                                HorizontalOptions="End" />
 						</StackLayout>
 					</StackLayout>
 				</ViewCell>

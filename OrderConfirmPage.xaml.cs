@@ -109,7 +109,6 @@ namespace customerapp
 			await Navigation.PopModalAsync();
 		}
 
-
         private async Task<bool> doPayment(){
 
             decimal sum = 0;
