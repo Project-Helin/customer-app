@@ -20,6 +20,8 @@ namespace customerapp
             OrderListView.ItemsSource = orders;
 
             OrderListView.ItemSelected += OrderSelected;
+
+            this.Title = "Orders";
         }
 
 		protected async override void OnAppearing(){

@@ -20,6 +20,8 @@ namespace customerapp
 		public OrderConfirmPage (Order order)
 		{
 			InitializeComponent ();
+            this.Title = "Confirm Order";
+
 			this.order = order;
 
 			initialiseMap (order);

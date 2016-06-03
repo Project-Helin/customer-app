@@ -17,6 +17,8 @@ namespace customerapp
 		public MissionListPage (Order order)
 		{
 			InitializeComponent ();
+            this.Title = "Missions";
+
 			this.order = order;
 
 			MissionListView.ItemsSource = missions;

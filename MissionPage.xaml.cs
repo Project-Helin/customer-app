@@ -18,7 +18,7 @@ namespace customerapp
 		public MissionPage (Mission mission)
 		{
 			InitializeComponent ();
-
+            this.Title = "Mission";
 			Debug.WriteLine ("Init MissionPage");
 
 			this.mission = mission;
