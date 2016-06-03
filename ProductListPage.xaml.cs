@@ -26,6 +26,8 @@ namespace customerapp
             InitializeComponent();
 			ProductListView.ItemsSource = products;
 			ProductListView.ItemTapped += ProductTapped;
+            this.Title = "Available Products";
+
         }
 
 		protected async override void OnAppearing()
