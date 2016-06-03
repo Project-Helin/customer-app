@@ -44,15 +44,11 @@
     <Compile Include="OrderListPage.xaml.cs">
       <DependentUpon>OrderListPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="OrderDetailPage.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="AuthenticationPage.xaml.cs">
       <DependentUpon>AuthenticationPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Dto\Customer.cs" />
-    <Compile Include="CartPage.xaml.cs">
-      <DependentUpon>CartPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Service\RestService.cs" />
     <Compile Include="MapWithRoute.cs" />
     <Compile Include="Dto\Route.cs" />
@@ -92,9 +88,6 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Include="AuthenticationPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Include="CartPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Include="OrderConfirmPage.xaml">
