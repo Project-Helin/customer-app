@@ -28,10 +28,10 @@ namespace customerapp
          * Set this property to the location the user will be redirected too after successfully authenticating
          * Be aware, that this need to be registred in google Developer Console.
          */
-        public static string RedirectUrl =  "http://www.helin.ch";
+        public static string RedirectUrl =  "http://blank.org";
 
         // public static string Server = "192.168.188.26:9000";
-		public static string Server = "http://151.80.44.117:80"; // ifnotelse.com
+		public static string Server = "151.80.44.117:80"; // ifnotelse.com
 
 		public static string ApiUrlBase = "http://" + Server;
         public static string ApiUrlListProducts = ApiUrlBase + "/api/products/?lat={0}&lon={1}";
