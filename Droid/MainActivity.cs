@@ -16,7 +16,11 @@ using Acr.UserDialogs;
 
 namespace customerapp.Droid
 {
-    [Activity(Label = "Drone Delivery", Icon = "@drawable/icon", Theme = "@style/HelinTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    [Activity(Label = "Drone Delivery", 
+        Icon = "@drawable/icon", 
+        Theme = "@style/HelinTheme", 
+        MainLauncher = true, 
+        ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
 	public class MainActivity : FormsAppCompatActivity
     {
         protected override void OnCreate(Bundle bundle)
