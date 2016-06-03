@@ -4,6 +4,10 @@ using System.Linq;
 
 using Foundation;
 using UIKit;
+using PayPal.Forms;
+using PayPal.Forms.Abstractions;
+using PayPal.Forms.Abstractions.Enum;
+using Xamarin.Forms;
 
 namespace customerapp.iOS
 {
@@ -14,7 +18,26 @@ namespace customerapp.iOS
         {
             global::Xamarin.Forms.Forms.Init();
 
+            Xamarin.FormsMaps.Init();
+
+            CrossPayPalManager.Init(new PayPalConfiguration(
+                PayPalEnvironment.NoNetwork,
+                "APP-80W284485P519543T"
+            )
+                {
+                    AcceptCreditCards = true,
+                    //Your business name
+                    MerchantName = "Project Helin Store",
+                    //Your privacy policy Url
+                    MerchantPrivacyPolicyUri = "https://www.example.com/privacy",
+                    //Your user agreement Url
+                    MerchantUserAgreementUri = "https://www.example.com/legal"
+                }
+            );
+
             LoadApplication(new App());
+
+
 
             return base.FinishedLaunching(app, options);
         }

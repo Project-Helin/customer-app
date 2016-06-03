@@ -1,31 +1,60 @@
 ﻿using System;
 
 using Xamarin.Forms;
+using System.Diagnostics;
 
 namespace customerapp
 {
-    public class App : Application
-    {
-        public App()
-        {
-            // The root page of your application
-            MainPage = new NavigationPage (new ProductListPage());
-        }
+	public class App : Application
+	{
+		public static NavigationPage NavPage;
 
-        protected override void OnStart()
-        {
-            // Handle when your app starts
-        }
+		public static Customer Customer { get; set; }
 
-        protected override void OnSleep()
-        {
-            // Handle when your app sleeps
-        }
+		public static IRestService Rest = new MockRestService ();
 
-        protected override void OnResume()
-        {
-            // Handle when your app resumes
-        }
-    }
+		public static bool IsLoggedIn {
+			get {
+				if (Customer != null) {
+					return !string.IsNullOrWhiteSpace (Customer.Email);
+				} else {
+					return false;
+				}
+			}
+		}
+
+		public static Action SuccessfulLoginAction {
+			get {
+				return new Action (() => {
+					if (IsLoggedIn) {
+
+						Debug.WriteLine ("Customer successfully logged in");
+						NavPage.Navigation.PopModalAsync ();
+					}
+				});
+			}
+		}
+
+		public App ()
+		{
+			// The root page of your application
+			MainPage = NavPage = new NavigationPage (new MainPage ());
+		}
+
+		protected override void OnStart ()
+		{
+			// Handle when your app starts
+		}
+
+		protected override void OnSleep ()
+		{
+			// Handle when your app sleeps
+		}
+
+		protected override void OnResume ()
+		{
+			// Handle when your app resumes
+		}
+	}
 }
 
