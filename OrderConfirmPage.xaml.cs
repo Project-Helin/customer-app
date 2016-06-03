@@ -6,6 +6,10 @@ using Xamarin.Forms.Maps;
 using System.Diagnostics;
 using customerapp.Dto;
 using System.Threading.Tasks;
+using PayPal.Forms;
+using PayPal.Forms.Abstractions;
+using PayPal.Forms.Abstractions.Enum;
+using Acr.UserDialogs;
 
 namespace customerapp
 {
@@ -58,13 +62,21 @@ namespace customerapp
         async void OnConfirmButtonClicked(object sender, EventArgs e)
 		{
             var userNeedToLoginFirst = !App.IsLoggedIn;
-            if(userNeedToLoginFirst){
+            if(userNeedToLoginFirst)
+            {
 				await Navigation.PushModalAsync (new AuthenticationPage ());		
 			}
 
-			if (App.IsLoggedIn) {
-                await ConfirmOrder ();
-			} else {
+			if (App.IsLoggedIn) 
+            {
+                var isPaymentSuccess = await doPayment ();
+                if(isPaymentSuccess)
+                {
+                    await ConfirmOrder ();    
+                }
+			} 
+            else 
+            {
 				Debug.WriteLine ("Customer not logged in yet");
 			}
 		}
@@ -98,28 +110,37 @@ namespace customerapp
 		}
 
 
-        /* 
-         * TODO
-         */
-        void payment(){
-            // send the order
-            Debug.WriteLine("Payment Successful");
-            // let user pay the order ... 
-            //                var result = await CrossPayPalManager.Current.Buy(new PayPalItem("Order 123", (Decimal) orderSum, "CHF"), new Decimal(0));
-            //                if (result.Status == PayPalStatus.Cancelled)
-            //                {
-            //                    Debug.WriteLine("Cancelled");
-            //                }
-            //                else if (result.Status == PayPalStatus.Error)
-            //                {
-            //                    Debug.WriteLine(result.ErrorMessage);
-            //                }
-            //                else if (result.Status == PayPalStatus.Successful)
-            //                {
-            //                    Debug.WriteLine("Payment Successful");
-            //                    Debug.WriteLine(result.ServerResponse.Response.Id);
-            //                }
+        private async Task<bool> doPayment(){
 
+            decimal sum = 0;
+            foreach(OrderProduct each in order.OrderProducts){
+                sum += each.Amount;
+            }
+
+            Debug.WriteLine("Payment Successful");
+            var result = await CrossPayPalManager.Current.Buy(new PayPalItem("Order ", (Decimal) sum, "CHF"), new Decimal(0));
+
+            if (result.Status == PayPalStatus.Cancelled)
+            {
+                UserDialogs.Instance.ShowError ("Cancelled");
+                return false;
+            }
+            else if (result.Status == PayPalStatus.Error)
+            {
+                Debug.WriteLine (result.ErrorMessage);
+                UserDialogs.Instance.ShowError ("Failed tp do payment");
+                return false;
+            }
+            else if (result.Status == PayPalStatus.Successful)
+            {
+                Debug.WriteLine("Payment Successful");
+                Debug.WriteLine(result.ServerResponse.Response.Id);
+                UserDialogs.Instance.ShowSuccess ("Payment accepted");
+
+                return true;
+            }
+
+            return false;
         }
 	}
 }

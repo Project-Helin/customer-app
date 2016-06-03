@@ -233,8 +233,7 @@ namespace customerapp
                 return null;
             }
         }
-
-
+            
         private async Task<HttpResponseMessage> DoPostRequestWithErrorHandling(Uri uri, object content){
 
             try{
