@@ -66,6 +66,9 @@ namespace customerapp
 			}
 
 			if (App.IsLoggedIn) {
+
+
+
 				await rest.ConfirmOrder (order.Id, App.Customer.Id);
 
 				var x = order.Missions.GetEnumerator();
@@ -91,6 +94,31 @@ namespace customerapp
 			await Navigation.PopModalAsync();
 
 		}
+
+
+        /* 
+         * TODO
+         */
+        void payment(){
+            // send the order
+            Debug.WriteLine("Payment Successful");
+            // let user pay the order ... 
+            //                var result = await CrossPayPalManager.Current.Buy(new PayPalItem("Order 123", (Decimal) orderSum, "CHF"), new Decimal(0));
+            //                if (result.Status == PayPalStatus.Cancelled)
+            //                {
+            //                    Debug.WriteLine("Cancelled");
+            //                }
+            //                else if (result.Status == PayPalStatus.Error)
+            //                {
+            //                    Debug.WriteLine(result.ErrorMessage);
+            //                }
+            //                else if (result.Status == PayPalStatus.Successful)
+            //                {
+            //                    Debug.WriteLine("Payment Successful");
+            //                    Debug.WriteLine(result.ServerResponse.Response.Id);
+            //                }
+
+        }
 	}
 }
 

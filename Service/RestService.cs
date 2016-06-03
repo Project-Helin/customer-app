@@ -35,11 +35,13 @@ namespace customerapp
 		public RestService ()
 		{
 			client = new HttpClient ();
+            // 30s is reasonable for timeout
+            client.Timeout = TimeSpan.FromSeconds(30);
 		}
 
         public async Task<List<Product>> GetAllProductsByLocation (Position customerPosition)
 		{
-			Debug.WriteLine ("Fetch order ");
+            UserDialogs.Instance.ShowLoading ("Loading available products");
 
             string x = customerPosition.Lat.ToString();
             string y = customerPosition.Lon.ToString();
@@ -53,39 +55,20 @@ namespace customerapp
 
             if (response != null && response.IsSuccessStatusCode) {
 				var content = await response.Content.ReadAsStringAsync ();
+
+                UserDialogs.Instance.HideLoading ();
 				return Newtonsoft.Json.JsonConvert.DeserializeObject <List<Product>> (content);
 			} else {
                 return new List<Product>();
 			}
 		}
 
-        private async Task<HttpResponseMessage> DoGetRequestWithErrorHandling(string urlWithParam, params object[] param){
-            var uri = new Uri (String.Format(urlWithParam, param));
-
-            try{
-                var response = await client.GetAsync (uri);
-
-                if(!response.IsSuccessStatusCode){
-                    Debug.WriteLine ("Request Failed to url {0} and response code {1}", uri, response.StatusCode);
-                    return null;
-                }else{
-                    return response;    
-                }
-            } catch(Exception ex){
-                UserDialogs.Instance.ShowError ("Failed to reach server. Reason: " + ex.Message);
-                Debug.WriteLine ("Request Failed to url {0}", uri);
-                return null;
-            }
-        }
-
 		public async Task<List<Order>> GetAllOrders (String customerId)
 		{
+            UserDialogs.Instance.ShowLoading ("Loading all orders");
 			Debug.WriteLine ("Fetch all orders for customer {0} ", customerId);
 
-			var uri = new Uri (String.Format (Constants.ApiUrlOrdersByCustomer, customerId));
-			Debug.WriteLine ("URI " + uri);
-
-			var response = await client.GetAsync (uri);
+            var response = await DoGetRequestWithErrorHandling (Constants.ApiUrlOrdersByCustomer, customerId);
 			List<Order> items = new List<Order>();
 
 			if (response.IsSuccessStatusCode) {
@@ -137,9 +120,7 @@ namespace customerapp
 
         public async Task<Order> CreateOrder (ICollection<Product> orderProducts, Position customerPosition)
 		{
-			var uri = new Uri (Constants.ApiUrlListOrder);
-			Debug.WriteLine ("URI " + uri);
-
+            UserDialogs.Instance.ShowLoading ("Getting drop position");
 			var projectId = getProjectId (orderProducts);
 
 			var request = new {
@@ -147,23 +128,19 @@ namespace customerapp
 				projectId = projectId,
 				orderProducts = orderProducts
 			};
+                    
+            var uri = new Uri (Constants.ApiUrlListOrder);
+            var response = await DoPostRequestWithErrorHandling(uri, request);
 
-			var jsonToSend = JsonConvert.SerializeObject (request, jsonSetting);
-			var contentToSend = new StringContent (jsonToSend, Encoding.UTF8, "application/json");
-
-			HttpResponseMessage response = await client.PostAsync (uri, contentToSend);
-
-			if (response.IsSuccessStatusCode) {
+			if (response != null && response.IsSuccessStatusCode) {
 				var content = await response.Content.ReadAsStringAsync();
 
-				Debug.WriteLine ("Create order response {0}", content);
-				Order output = Newtonsoft.Json.JsonConvert.DeserializeObject <Order> (content, jsonSetting); 
-				return output;
+                UserDialogs.Instance.HideLoading ();
+				return Newtonsoft.Json.JsonConvert.DeserializeObject <Order> (content, jsonSetting); 
 			} else {
 				Debug.WriteLine ("Failed to create order with status code " + response.StatusCode);
 				return null;
 			}
-
 		}
 
 		public async Task DeleteOrder (string orderId)
@@ -178,16 +155,6 @@ namespace customerapp
 			if (!response.IsSuccessStatusCode) {
 				Debug.WriteLine ("Failed to delete order {0} with status code {1} ", orderId, response.StatusCode);
 			}
-		}
-
-		String getProjectId(ICollection<Product> orderProducts){
-			/**
-			 * Since all products should be from the same project
-			 * we can get the project id from the first product
-			 */
-			var enumerator = orderProducts.GetEnumerator ();
-			enumerator.MoveNext ();
-			return enumerator.Current.ProjectId;
 		}
 
 		public async Task<Customer> GetCustomerInfo (Account account)
@@ -251,6 +218,60 @@ namespace customerapp
 			return null;
 		}
 
+        private async Task<HttpResponseMessage> DoGetRequestWithErrorHandling(string urlWithParam, params object[] param){
+            var uri = new Uri (String.Format(urlWithParam, param));
+
+            try{
+                
+                var response = await client.GetAsync (uri);
+
+                if(!response.IsSuccessStatusCode){
+                    Debug.WriteLine ("Request Failed to url {0} and response code {1}", uri, response.StatusCode);
+                    UserDialogs.Instance.ShowError ("Failed to reach server.");
+                    return null;
+                }else{
+                    return response;    
+                }
+            } catch(Exception ex){
+                UserDialogs.Instance.ShowError ("Failed to reach server.");
+                Debug.WriteLine ("Request Failed to url {0}", uri, ex);
+                return null;
+            }
+        }
+
+
+        private async Task<HttpResponseMessage> DoPostRequestWithErrorHandling(Uri uri, object content){
+
+            try{
+                var jsonToSend = JsonConvert.SerializeObject (content, jsonSetting);
+                var contentToSend = new StringContent (jsonToSend, Encoding.UTF8, "application/json");
+
+                var response = await client.PostAsync (uri, contentToSend);
+
+                if(!response.IsSuccessStatusCode){
+                    Debug.WriteLine ("Request Failed to url {0} and response code {1}", uri, response.StatusCode);
+                    UserDialogs.Instance.ShowError ("Failed to reach server.");
+                    return null;
+                }else{
+                    return response;    
+                }
+            } catch(Exception ex){
+                UserDialogs.Instance.ShowError ("Failed to reach server.");
+                Debug.WriteLine ("Request Failed to url {0}", uri, ex);
+                return null;
+            }
+        }
+
+
+        private String getProjectId(ICollection<Product> orderProducts){
+            /**
+             * Since all products should be from the same project
+             * we can get the project id from the first product
+             */
+            var enumerator = orderProducts.GetEnumerator ();
+            enumerator.MoveNext ();
+            return enumerator.Current.ProjectId;
+        }
 
 	}
 

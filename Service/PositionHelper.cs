@@ -35,7 +35,7 @@ namespace customerapp
             return null;
         }
 
-        public static async Task<PermissionStatus> AskForPermissionToGetGps(Page parentPage){
+        private static async Task<PermissionStatus> AskForPermissionToGetGps(Page parentPage){
             var status = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Location);
 
             var hasNoPermission = (status != PermissionStatus.Granted);
@@ -53,7 +53,7 @@ namespace customerapp
             return status;
         }
 
-        public static async Task<customerapp.Dto.Position> ReadGpsPosition(){
+        private static async Task<customerapp.Dto.Position> ReadGpsPosition(){
             UserDialogs.Instance.ShowLoading ("Waiting for GPS position");
 
             var locator = CrossGeolocator.Current;

@@ -52,13 +52,9 @@ namespace customerapp
             var customerPosition = await PositionHelper.GetPositionOrNull (this);
 
             if (customerPosition != null) {
-                UserDialogs.Instance.ShowLoading ("Loading available products");
-
                 var productsFromServer = 
                     await App.Rest.GetAllProductsByLocation (customerPosition);
                 
-                UserDialogs.Instance.HideLoading ();
-
                 foreach (Product each in productsFromServer) {
                     products.Add (each);
                 }
@@ -67,7 +63,6 @@ namespace customerapp
 
 		void ProductTapped(object sender, ItemTappedEventArgs e)
         {
-
             Product selectedProduct = e.Item as Product;
 			selectedProduct.Amount += 1;
 
@@ -77,70 +72,44 @@ namespace customerapp
                 orderedProducts.Add(selectedProduct);
             }
 				
-			if (selectedProduct.Amount > 0) {
+            var canSentOrder = selectedProduct.Amount > 0;
+            if (canSentOrder) {
 				Button button = this.FindByName<Button> ("SendOrderButton");
 				button.IsEnabled = true;
 			}
 
 			updateTotalAmount ();
-
-			// TODO: disable all products with different organisation
         }
 
-		void updateTotalAmount(){
+		private void updateTotalAmount(){
 			var totalAmout = orderedProducts.Sum((a) => a.Amount * a.Price);
 			setTotalAmout (totalAmout);
 		}
 
-		void setTotalAmout(decimal totalAmout){
+		private void setTotalAmout(decimal totalAmout){
 			Label totalAmountLabel = this.FindByName<Label> ("TotalAmount");
 			totalAmountLabel.Text = "Total: " + string.Format("{0:0.00}", totalAmout)  + " CHF";
 		}
-
 
         async void OnOrderButtonClick(object sender, EventArgs args)
         {
             var orderSum = orderedProducts.Sum((a) => a.Amount * a.Price);
 
-            var orderConfirmed = await DisplayAlert("Buy products?", 
-				"Are you sure to order for " + string.Format("{0:0.00}", orderSum) + " CHF?", "Yes", "No");
+            var message = "Are you sure to order for " + string.Format ("{0:0.00}", orderSum) + " CHF?";
+            var orderConfirmed = await DisplayAlert("Buy products?", message, "Yes", "No");
 
             if (orderConfirmed)
             {
-				UserDialogs.Instance.ShowLoading ("Get drop position");
-                Order response = await App.Rest.CreateOrder(orderedProducts, null);
-				UserDialogs.Instance.HideLoading ();
+                var position = await PositionHelper.GetPositionOrNull (this);
+                var response = await App.Rest.CreateOrder(orderedProducts, position);
 
-				Debug.WriteLine ("Created order with id {0}", response.Id); 
+                if(response != null ){
+                    Debug.WriteLine ("Created order with id {0}", response.Id); 
 
-				await Navigation.PushModalAsync(new OrderConfirmPage(response));
+                    await Navigation.PushModalAsync(new OrderConfirmPage(response));                    
+                }
             }
         }
-
-		/* 
-		 * TODO
-		 */
-		void payment(){
-			// send the order
-			Debug.WriteLine("Payment Successful");
-			// let user pay the order ... 
-			//                var result = await CrossPayPalManager.Current.Buy(new PayPalItem("Order 123", (Decimal) orderSum, "CHF"), new Decimal(0));
-			//                if (result.Status == PayPalStatus.Cancelled)
-			//                {
-			//                    Debug.WriteLine("Cancelled");
-			//                }
-			//                else if (result.Status == PayPalStatus.Error)
-			//                {
-			//                    Debug.WriteLine(result.ErrorMessage);
-			//                }
-			//                else if (result.Status == PayPalStatus.Successful)
-			//                {
-			//                    Debug.WriteLine("Payment Successful");
-			//                    Debug.WriteLine(result.ServerResponse.Response.Id);
-			//                }
-
-		}
-		    
     }
 }
 
