@@ -25,7 +25,7 @@ namespace customerapp
 		public static string UserInfoUrl = "https://www.googleapis.com/plus/v1/people/me/openIdConnect";
 
         // Set this property to the location the user will be redirected too after successfully authenticating
-        public static string RedirectUrl = "https://ifnotelse.com/";
+        public static string RedirectUrl =  "https://blank.org/";
 
         public static string Server = "192.168.188.26:9000";
 		// public static string Server = "http://151.80.44.117:80"; // ifnotelse.com

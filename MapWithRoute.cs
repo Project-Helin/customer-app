@@ -26,12 +26,20 @@ namespace customerapp
 
 		private customerapp.Dto.Position pos;
 
-		public customerapp.Dto.Position CurrentPosition { get{ return pos; } set{ pos = value;
+		public customerapp.Dto.Position CurrentPosition 
+        { 
+            get
+            { 
+                return pos; 
+            } 
+            set
+            { 
+                pos = value;
 				if (value != null) {
 					onPropertyChanged (this, "pos");
 				}
-
-			} }
+            } 
+        }
 
 		public MapWithRoute ()
 		{

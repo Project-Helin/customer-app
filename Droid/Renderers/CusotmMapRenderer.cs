@@ -85,10 +85,6 @@ namespace MapOverlay.Droid
 				polylineOptions.Add (new LatLng (position.Lat, position.Lon));
 			}
 			map.AddPolyline (polylineOptions);
-
-
-
 		}
-
 	}
 }

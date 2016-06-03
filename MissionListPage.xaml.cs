@@ -20,7 +20,6 @@ namespace customerapp
 			this.order = order;
 
 			MissionListView.ItemsSource = missions;
-
 			MissionListView.ItemSelected += MissionSelected;
 		}
 
@@ -33,7 +32,6 @@ namespace customerapp
 			foreach (Mission each in missionsFromServer) {
 				missions.Add (each);
 			}
-
 		}
 
 		async void MissionSelected (object sender, SelectedItemChangedEventArgs e)

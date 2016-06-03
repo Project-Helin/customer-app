@@ -20,19 +20,16 @@
 						FontSize = "Medium"
 						HorizontalOptions = "FillAndExpand"
 						VerticalOptions = "Center"
-						TextColor="Red"
+                        BackgroundColor="Gray"
+						TextColor="Black"
 						Clicked="OnCancelButtonClicked"/>
 					<Button 
 						Text = "Confirm Position"
 						FontSize = "Medium"
 						HorizontalOptions = "FillAndExpand"
 						VerticalOptions = "Center"
-						TextColor="Blue"
-						Clicked="OnButtonClicked"/>
+						Clicked="OnConfirmButtonClicked"/>
 				</StackLayout>
-			
-
-
 		</StackLayout>
 	</ContentPage.Content>
 </ContentPage>

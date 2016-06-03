@@ -31,6 +31,7 @@
 				Clicked="OnShowProductButtonClick" />
 			<Button
 				Text="Show my orders"
+                x:Name="OrdersButton"
 				HorizontalOptions="FillAndExpand"
 				VerticalOptions="CenterAndExpand"
 				Clicked="OnShowOrdersClick" />

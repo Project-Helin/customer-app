@@ -20,18 +20,20 @@ namespace customerapp
 			base.OnAppearing ();
 
             await loadCustomerIfAvailable ();
+
+            var ordersButton = this.FindByName<Button> ("OrdersButton");
+            ordersButton.IsEnabled = App.IsLoggedIn;
 		}
 
         private async Task loadCustomerIfAvailable(){
+
             var customerId = Settings.GetCustomerIdOrNull ();
-
-            var noCustomerAvailable =  !App.IsLoggedIn;
-
-            if (App.IsLoggedIn) {
+            var loadCustomer =  !string.IsNullOrWhiteSpace(customerId) && App.Customer == null;
+            if (loadCustomer) {
                 App.Customer = await App.Rest.GetCustomerById (customerId); 
             } else {
-                Debug.WriteLine ("No customer loaded because hasCustomer={0} and isCustomerNull = {1}", 
-                    noCustomerAvailable, App.Customer == null);
+                Debug.WriteLine ("No customer loaded because customerId={0} and isCustomerNull = {1}", 
+                    customerId, App.Customer == null);
             }  
         }
 

@@ -5,14 +5,13 @@ using Xamarin.Forms;
 using Xamarin.Forms.Maps;
 using System.Diagnostics;
 using customerapp.Dto;
+using System.Threading.Tasks;
 
 namespace customerapp
 {
 	public partial class OrderConfirmPage : ContentPage
 	{
-	
 		private Order order; 
-		IRestService rest = App.Rest;
 
 		public OrderConfirmPage (Order order)
 		{
@@ -22,16 +21,15 @@ namespace customerapp
 			initialiseMap (order);
 		}
 
-		void initialiseMap(Order order){
+		private void initialiseMap(Order order){
 			var map = this.FindByName<MapWithRoute>("Map");
 
-
-
+            // Show only the first mission - because drop position is same
 			var enumerator = order.Missions.GetEnumerator ();
 			enumerator.MoveNext ();
 
-			var position = enumerator.Current.Route.DropPosition();
-			var pin = createPinForDeliveryPosition (position);
+            var dropPosition = enumerator.Current.Route.DropPosition();
+			var pin = createPinForDeliveryPosition (dropPosition);
 
 			map.Pins.Add(pin);
 			map.MoveToRegion(
@@ -40,10 +38,9 @@ namespace customerapp
 					Distance.FromMeters(100)
 				)
 			);
-
 		}
 
-		Pin createPinForDeliveryPosition(customerapp.Dto.Position position){
+		private Pin createPinForDeliveryPosition(customerapp.Dto.Position position){
 			var deliveryPosition = new Xamarin.Forms.Maps.Position(
 				position.Lat, 
 				position.Lon
@@ -58,41 +55,46 @@ namespace customerapp
 			return pin;
 		}
 			
-		async void OnButtonClicked(object sender, EventArgs e)
+        async void OnConfirmButtonClicked(object sender, EventArgs e)
 		{
-
-			if(!App.IsLoggedIn){
+            var userNeedToLoginFirst = !App.IsLoggedIn;
+            if(userNeedToLoginFirst){
 				await Navigation.PushModalAsync (new AuthenticationPage ());		
 			}
 
 			if (App.IsLoggedIn) {
-
-
-
-				await rest.ConfirmOrder (order.Id, App.Customer.Id);
-
-				var x = order.Missions.GetEnumerator();
-				x.MoveNext ();
-
-				Debug.WriteLine ("First mission {0}", x.Current.Id);
-
-				Debug.WriteLine ("Push misison page");
-
-				Device.BeginInvokeOnMainThread( () => {
-					Navigation.PopModalAsync ();
-					Navigation.PushModalAsync(new MissionPage(x.Current));
-				});
-
-
+                await ConfirmOrder ();
 			} else {
 				Debug.WriteLine ("Customer not logged in yet");
 			}
 		}
 
-		async  void OnCancelButtonClicked(object sender, EventArgs e){
-			await rest.DeleteOrder (order.Id);
-			await Navigation.PopModalAsync();
+        private async Task ConfirmOrder(){
+            await App.Rest.ConfirmOrder (order.Id, App.Customer.Id);
 
+            var showMissionList = order.Missions.Count > 1;
+            if (showMissionList) {
+                Device.BeginInvokeOnMainThread (() => {
+                    Navigation.PopModalAsync ();
+                    Navigation.PushModalAsync (new MissionListPage (order));
+                });
+            } 
+            else 
+            {
+                Device.BeginInvokeOnMainThread( () => {
+                    var missionEnum = order.Missions.GetEnumerator();
+                    missionEnum.MoveNext ();
+
+                    Navigation.PopModalAsync ();
+                    Navigation.PushModalAsync(new MissionPage(missionEnum.Current));
+                });
+
+            }
+        }
+
+		async  void OnCancelButtonClicked(object sender, EventArgs e){
+            await App.Rest.DeleteOrder (order.Id);
+			await Navigation.PopModalAsync();
 		}
 
 

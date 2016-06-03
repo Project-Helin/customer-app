@@ -15,8 +15,6 @@ namespace customerapp
 		private Mission mission;
 		Websockets.IWebSocketConnection connection;
 
- 
-
 		public MissionPage (Mission mission)
 		{
 			InitializeComponent ();
@@ -26,9 +24,8 @@ namespace customerapp
 			this.mission = mission;
 			initialiseMap (mission);
 		}
-
-
-		MapWithRoute initialiseMap(Mission mission){
+            
+		private MapWithRoute initialiseMap(Mission mission){
 			
 			var map = Map;
 
@@ -37,14 +34,16 @@ namespace customerapp
 				map.CalculatedRoute.Add (eachWayPoint.Position);	
 			}
 
-			// add all waypoints for route
-			foreach (var info in mission.DroneInfos){
-				map.FlownRoute.Add (info.PhonePosition);	
-			}
+            if (mission.DroneInfos != null) {
+                // add all waypoints for route
+                foreach (var info in mission.DroneInfos){
+                    map.FlownRoute.Add (info.PhonePosition);    
+                }
+            }
+			
+            Waypoint dropPoint = mission.Route.WayPoints.Find (o => o.Action.Equals ("DROP"));
 
-			Waypoint droppoint = mission.Route.WayPoints.Find (o => o.Action.Equals ("DROP"));
-
-			var pin = createPinForDeliveryPosition(droppoint.Position);
+			var pin = createPinForDeliveryPosition(dropPoint.Position);
 			map.Pins.Add(pin);
 			map.MoveToRegion(MapSpan.FromCenterAndRadius(pin.Position, Distance.FromMeters(100)));
 
@@ -52,7 +51,7 @@ namespace customerapp
 		}
 
 
-		protected async override void OnAppearing(){
+		protected override void OnAppearing(){
 			base.OnAppearing ();
 			connection = Websockets.WebSocketFactory.Create();
 			connection.OnOpened += Connection_OnOpened;
@@ -68,12 +67,11 @@ namespace customerapp
 
 		private void Connection_OnMessage(string obj)
 		{
-
-			var message = Newtonsoft.Json.JsonConvert.DeserializeObject <DroneInfoMessage> (obj);
-			Map.CurrentPosition = message.DroneInfo.PhonePosition;
+            var droneInfo = Newtonsoft.Json.JsonConvert.DeserializeObject <DroneInfoMessage> (obj);
+			Map.CurrentPosition = droneInfo.DroneInfo.PhonePosition;
 		}
 
-		Pin createPinForDeliveryPosition(customerapp.Dto.Position position){
+		private Pin createPinForDeliveryPosition(customerapp.Dto.Position position){
 			var deliveryPosition = new Xamarin.Forms.Maps.Position(
 				position.Lat, 
 				position.Lon

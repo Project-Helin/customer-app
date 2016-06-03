@@ -100,8 +100,8 @@ namespace customerapp
 
             if (orderConfirmed)
             {
-                var position = await PositionHelper.GetPositionOrNull (this);
-                var response = await App.Rest.CreateOrder(orderedProducts, position);
+                var customerPosition = await PositionHelper.GetPositionOrNull (this);
+                var response = await App.Rest.CreateOrder(orderedProducts, customerPosition);
 
                 if(response != null ){
                     Debug.WriteLine ("Created order with id {0}", response.Id); 
