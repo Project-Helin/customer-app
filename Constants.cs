@@ -30,8 +30,8 @@ namespace customerapp
          */
         public static string RedirectUrl =  "http://www.helin.ch";
 
-        public static string Server = "192.168.188.26:9000";
-		// public static string Server = "http://151.80.44.117:80"; // ifnotelse.com
+        // public static string Server = "192.168.188.26:9000";
+		public static string Server = "http://151.80.44.117:80"; // ifnotelse.com
 
 		public static string ApiUrlBase = "http://" + Server;
         public static string ApiUrlListProducts = ApiUrlBase + "/api/products/?lat={0}&lon={1}";
