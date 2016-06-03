@@ -3015,29 +3015,29 @@ namespace customerapp.Droid
 		public partial class Color
 		{
 			
-			// aapt resource value: 0x7f06005f
-			public const int abc_background_cache_hint_selector_material_dark = 2131099743;
+			// aapt resource value: 0x7f06005e
+			public const int abc_background_cache_hint_selector_material_dark = 2131099742;
 			
-			// aapt resource value: 0x7f060060
-			public const int abc_background_cache_hint_selector_material_light = 2131099744;
+			// aapt resource value: 0x7f06005f
+			public const int abc_background_cache_hint_selector_material_light = 2131099743;
 			
 			// aapt resource value: 0x7f06000e
 			public const int abc_input_method_navigation_guard = 2131099662;
 			
+			// aapt resource value: 0x7f060060
+			public const int abc_primary_text_disable_only_material_dark = 2131099744;
+			
 			// aapt resource value: 0x7f060061
-			public const int abc_primary_text_disable_only_material_dark = 2131099745;
+			public const int abc_primary_text_disable_only_material_light = 2131099745;
 			
 			// aapt resource value: 0x7f060062
-			public const int abc_primary_text_disable_only_material_light = 2131099746;
+			public const int abc_primary_text_material_dark = 2131099746;
 			
 			// aapt resource value: 0x7f060063
-			public const int abc_primary_text_material_dark = 2131099747;
+			public const int abc_primary_text_material_light = 2131099747;
 			
 			// aapt resource value: 0x7f060064
-			public const int abc_primary_text_material_light = 2131099748;
-			
-			// aapt resource value: 0x7f060065
-			public const int abc_search_url_text = 2131099749;
+			public const int abc_search_url_text = 2131099748;
 			
 			// aapt resource value: 0x7f06000f
 			public const int abc_search_url_text_normal = 2131099663;
@@ -3048,11 +3048,11 @@ namespace customerapp.Droid
 			// aapt resource value: 0x7f060011
 			public const int abc_search_url_text_selected = 2131099665;
 			
-			// aapt resource value: 0x7f060066
-			public const int abc_secondary_text_material_dark = 2131099750;
+			// aapt resource value: 0x7f060065
+			public const int abc_secondary_text_material_dark = 2131099749;
 			
-			// aapt resource value: 0x7f060067
-			public const int abc_secondary_text_material_light = 2131099751;
+			// aapt resource value: 0x7f060066
+			public const int abc_secondary_text_material_light = 2131099750;
 			
 			// aapt resource value: 0x7f060012
 			public const int accent_material_dark = 2131099666;
@@ -3120,8 +3120,8 @@ namespace customerapp.Droid
 			// aapt resource value: 0x7f060050
 			public const int common_action_bar_splitter = 2131099728;
 			
-			// aapt resource value: 0x7f060068
-			public const int common_google_signin_btn_text_dark = 2131099752;
+			// aapt resource value: 0x7f060067
+			public const int common_google_signin_btn_text_dark = 2131099751;
 			
 			// aapt resource value: 0x7f060051
 			public const int common_google_signin_btn_text_dark_default = 2131099729;
@@ -3135,8 +3135,8 @@ namespace customerapp.Droid
 			// aapt resource value: 0x7f060052
 			public const int common_google_signin_btn_text_dark_pressed = 2131099730;
 			
-			// aapt resource value: 0x7f060069
-			public const int common_google_signin_btn_text_light = 2131099753;
+			// aapt resource value: 0x7f060068
+			public const int common_google_signin_btn_text_light = 2131099752;
 			
 			// aapt resource value: 0x7f060055
 			public const int common_google_signin_btn_text_light_default = 2131099733;
@@ -3150,8 +3150,8 @@ namespace customerapp.Droid
 			// aapt resource value: 0x7f060056
 			public const int common_google_signin_btn_text_light_pressed = 2131099734;
 			
-			// aapt resource value: 0x7f06006a
-			public const int common_plus_signin_btn_text_dark = 2131099754;
+			// aapt resource value: 0x7f060069
+			public const int common_plus_signin_btn_text_dark = 2131099753;
 			
 			// aapt resource value: 0x7f060048
 			public const int common_plus_signin_btn_text_dark_default = 2131099720;
@@ -3165,8 +3165,8 @@ namespace customerapp.Droid
 			// aapt resource value: 0x7f060049
 			public const int common_plus_signin_btn_text_dark_pressed = 2131099721;
 			
-			// aapt resource value: 0x7f06006b
-			public const int common_plus_signin_btn_text_light = 2131099755;
+			// aapt resource value: 0x7f06006a
+			public const int common_plus_signin_btn_text_light = 2131099754;
 			
 			// aapt resource value: 0x7f06004c
 			public const int common_plus_signin_btn_text_light_default = 2131099724;
@@ -3180,8 +3180,8 @@ namespace customerapp.Droid
 			// aapt resource value: 0x7f06004d
 			public const int common_plus_signin_btn_text_light_pressed = 2131099725;
 			
-			// aapt resource value: 0x7f06005e
-			public const int darkgrey = 2131099742;
+			// aapt resource value: 0x7f06005d
+			public const int darkgrey = 2131099741;
 			
 			// aapt resource value: 0x7f060004
 			public const int design_fab_shadow_end_color = 2131099652;
@@ -3306,9 +3306,6 @@ namespace customerapp.Droid
 			// aapt resource value: 0x7f06003d
 			public const int primary_text_disabled_material_light = 2131099709;
 			
-			// aapt resource value: 0x7f06005d
-			public const int red = 2131099741;
-			
 			// aapt resource value: 0x7f06003e
 			public const int ripple_material_dark = 2131099710;
 			
@@ -3333,11 +3330,11 @@ namespace customerapp.Droid
 			// aapt resource value: 0x7f060045
 			public const int switch_thumb_disabled_material_light = 2131099717;
 			
-			// aapt resource value: 0x7f06006c
-			public const int switch_thumb_material_dark = 2131099756;
+			// aapt resource value: 0x7f06006b
+			public const int switch_thumb_material_dark = 2131099755;
 			
-			// aapt resource value: 0x7f06006d
-			public const int switch_thumb_material_light = 2131099757;
+			// aapt resource value: 0x7f06006c
+			public const int switch_thumb_material_light = 2131099756;
 			
 			// aapt resource value: 0x7f060046
 			public const int switch_thumb_normal_material_dark = 2131099718;
