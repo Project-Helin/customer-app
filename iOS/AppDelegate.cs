@@ -36,7 +36,7 @@ namespace customerapp.iOS
             );
 
             LoadApplication(new App());
-
+            Websockets.Ios.WebsocketConnection.Link();
 
 
             return base.FinishedLaunching(app, options);

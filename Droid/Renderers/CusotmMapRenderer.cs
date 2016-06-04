@@ -17,7 +17,7 @@ namespace MapOverlay.Droid
 	{
 		
 		GoogleMap map;
-		MapWithRoute mapR;
+		MapWithRoute mapWithRoute;
 
 		List<customerapp.Dto.Position> calculatedRoute;
 		List<customerapp.Dto.Position> flownRoute;
@@ -32,12 +32,11 @@ namespace MapOverlay.Droid
 
 			if (e.NewElement != null) {
 				var formsMap = (MapWithRoute)e.NewElement;
-				mapR = formsMap;
+                mapWithRoute = formsMap;
 				calculatedRoute = formsMap.CalculatedRoute;
 				flownRoute = formsMap.FlownRoute;
 
 				formsMap.PropertyChanged += OnChange;
-
 
 				((MapView)Control).GetMapAsync (this);
 			}
@@ -50,25 +49,25 @@ namespace MapOverlay.Droid
                 addDroneImage();
 
     			var pos = new Xamarin.Forms.Maps.Position (
-                    mapR.CurrentPosition.Lat,
-                    mapR.CurrentPosition.Lon
+                    mapWithRoute.CurrentPosition.Lat,
+                    mapWithRoute.CurrentPosition.Lon
     			);
     		
-                mapR.MoveToRegion(MapSpan.FromCenterAndRadius(pos, Distance.FromMeters(100)));
+                mapWithRoute.MoveToRegion(MapSpan.FromCenterAndRadius(pos, Distance.FromMeters(100)));
            
             });
 		}
 
         private void addDroneImage(){
             var currentPositionAsLatLon = new LatLng(
-                mapR.CurrentPosition.Lat,
-                mapR.CurrentPosition.Lon
+                mapWithRoute.CurrentPosition.Lat,
+                mapWithRoute.CurrentPosition.Lon
             );
                 
             var droneResource = customerapp.Droid.Resource.Drawable.drone;
             var image = BitmapDescriptorFactory.FromResource(droneResource);
             var groundOverLay = new GroundOverlayOptions()
-                .Position(currentPositionAsLatLon, 32)
+                .Position(currentPositionAsLatLon, 16)
                 .InvokeImage(image);
             map.AddGroundOverlay(groundOverLay);
         }
