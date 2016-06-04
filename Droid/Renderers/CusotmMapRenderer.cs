@@ -45,28 +45,33 @@ namespace MapOverlay.Droid
 		}
 
 		public void OnChange(object o,PropertyChangedEventArgs ar){
-
             Device.BeginInvokeOnMainThread( () => {
-    			var polylineOptions = new CircleOptions ();
-                polylineOptions.InvokeFillColor (0x00E5FF);
-    			polylineOptions.InvokeRadius (3);
-                Console.WriteLine(mapR.CurrentPosition.Lat + " " + mapR.CurrentPosition.Lon );
-    			polylineOptions.InvokeCenter (
-    				new LatLng(
-    					mapR.CurrentPosition.Lat,
-    					mapR.CurrentPosition.Lon
-    				)
-    			);
-    			map.AddCircle (polylineOptions);
 
-    			var a = new Xamarin.Forms.Maps.Position (
+                addDroneImage();
+
+    			var pos = new Xamarin.Forms.Maps.Position (
                     mapR.CurrentPosition.Lat,
                     mapR.CurrentPosition.Lon
     			);
     		
-    			mapR.MoveToRegion(MapSpan.FromCenterAndRadius(a, Distance.FromMeters(5)));
+                mapR.MoveToRegion(MapSpan.FromCenterAndRadius(pos, Distance.FromMeters(100)));
+           
             });
 		}
+
+        private void addDroneImage(){
+            var currentPositionAsLatLon = new LatLng(
+                mapR.CurrentPosition.Lat,
+                mapR.CurrentPosition.Lon
+            );
+                
+            var droneResource = customerapp.Droid.Resource.Drawable.drone;
+            var image = BitmapDescriptorFactory.FromResource(droneResource);
+            var groundOverLay = new GroundOverlayOptions()
+                .Position(currentPositionAsLatLon, 32)
+                .InvokeImage(image);
+            map.AddGroundOverlay(groundOverLay);
+        }
 
 		public void OnMapReady (GoogleMap googleMap)
 		{
