@@ -4,7 +4,7 @@ namespace customerapp
 {
 	public class DroneInfoMessage
 	{
-		public DroneInfo DroneInfo{ get; set;}
+        public DroneInfo DroneInfo{ get; set;}
 	}
 }
 

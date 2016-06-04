@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace customerapp.Dto
 {
@@ -13,6 +14,8 @@ namespace customerapp.Dto
 		public List<OrderProduct> OrderProducts { get; set; }
 		   
 		public String State{ get; set; }
+
+        public String CreatedAt{ get; set; }
     }
 }
 

@@ -6,8 +6,7 @@ namespace customerapp
 {
 	public class DroneInfo
 	{
-
-		public Position PhonePosition{ get; set; }
+        public GpsState GpsState{ set; get; }
 	}
 
 
