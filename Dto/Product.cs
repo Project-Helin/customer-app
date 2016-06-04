@@ -36,7 +36,18 @@ namespace customerapp.Dto
             { 
                 amount = value;
                 onPropertyChanged(this, "Amount");
-            
+            } 
+        }
+
+        bool isEnabled;
+
+        public bool IsEnabled { 
+            set{ 
+                isEnabled = value;
+                onPropertyChanged(this, "IsEnabled");
+            } 
+            get{
+                return isEnabled;
             } 
         }
     }
