@@ -18,7 +18,7 @@ namespace customerapp
 		public MissionPage (Mission mission)
 		{
 			InitializeComponent ();
-            this.Title = "Mission";
+            this.Title = "Delivery for " + mission.OrderProduct.Product.Name;;
 			Debug.WriteLine ("Init MissionPage");
 
 			this.mission = mission;
@@ -37,7 +37,7 @@ namespace customerapp
             if (mission.DroneInfos != null) {
                 // add all waypoints for route
                 foreach (var info in mission.DroneInfos){
-                    map.FlownRoute.Add (info.PhonePosition);    
+                    map.FlownRoute.Add (info.GpsState.AsPosition);    
                 }
             }
 			
@@ -53,22 +53,32 @@ namespace customerapp
 
 		protected override void OnAppearing(){
 			base.OnAppearing ();
+
 			connection = Websockets.WebSocketFactory.Create();
-			connection.OnOpened += Connection_OnOpened;
-			connection.OnMessage += Connection_OnMessage;
+			connection.OnOpened += OnWebsocketConnectionOpened;
+			connection.OnMessage += OnWebsocketMessage;
 
 			connection.Open(String.Format(Constants.WsForDroneInfos, mission.Id));
 		}
 
-		private void Connection_OnOpened()
+        protected override void OnDisappearing(){
+            if (connection != null && connection.IsOpen) {
+                connection.OnOpened -= OnWebsocketConnectionOpened;
+                connection.OnMessage -= OnWebsocketMessage;
+                connection.Close ();
+            }
+        }
+
+		private void OnWebsocketConnectionOpened()
 		{
-			Debug.WriteLine("Opened !");
+			Debug.WriteLine("Opened Websocket connection!");
 		}
 
-		private void Connection_OnMessage(string obj)
+		private void OnWebsocketMessage(string obj)
 		{
+            Debug.WriteLine ("Got new message {0}", obj);
             var droneInfo = Newtonsoft.Json.JsonConvert.DeserializeObject <DroneInfoMessage> (obj);
-			Map.CurrentPosition = droneInfo.DroneInfo.PhonePosition;
+            Map.CurrentPosition = droneInfo.DroneInfo.GpsState.AsPosition;
 		}
 
 		private Pin createPinForDeliveryPosition(customerapp.Dto.Position position){

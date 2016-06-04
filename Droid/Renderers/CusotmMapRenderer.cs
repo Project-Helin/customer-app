@@ -45,24 +45,27 @@ namespace MapOverlay.Droid
 		}
 
 		public void OnChange(object o,PropertyChangedEventArgs ar){
-			var polylineOptions = new CircleOptions ();
-			polylineOptions.InvokeFillColor (0x00E5FF00);
-			polylineOptions.InvokeRadius (3);
-			polylineOptions.InvokeCenter (
-				new LatLng(
-					mapR.CurrentPosition.Lat,
-					mapR.CurrentPosition.Lon
-				)
-			);
-			map.AddCircle (polylineOptions);
 
-			var a = new Xamarin.Forms.Maps.Position (
-				polylineOptions.Center.Latitude, 
-				polylineOptions.Center.Longitude
-			);
-		
-			mapR.MoveToRegion(MapSpan.FromCenterAndRadius(a, Distance.FromMeters(1)));
+            Device.BeginInvokeOnMainThread( () => {
+    			var polylineOptions = new CircleOptions ();
+                polylineOptions.InvokeFillColor (0x00E5FF);
+    			polylineOptions.InvokeRadius (3);
+                Console.WriteLine(mapR.CurrentPosition.Lat + " " + mapR.CurrentPosition.Lon );
+    			polylineOptions.InvokeCenter (
+    				new LatLng(
+    					mapR.CurrentPosition.Lat,
+    					mapR.CurrentPosition.Lon
+    				)
+    			);
+    			map.AddCircle (polylineOptions);
 
+    			var a = new Xamarin.Forms.Maps.Position (
+                    mapR.CurrentPosition.Lat,
+                    mapR.CurrentPosition.Lon
+    			);
+    		
+    			mapR.MoveToRegion(MapSpan.FromCenterAndRadius(a, Distance.FromMeters(5)));
+            });
 		}
 
 		public void OnMapReady (GoogleMap googleMap)
