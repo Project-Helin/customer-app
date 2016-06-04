@@ -4,7 +4,7 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 	x:Class="customerapp.OrderListPage">
 	<ListView
-		x:Name="OrderListView">
+		x:Name="OrderListView" >
 		<ListView.ItemTemplate>
 			<DataTemplate>
 				<ViewCell>
@@ -13,11 +13,11 @@
 						<StackLayout
 							Orientation="Horizontal"
 							Padding="10">
-							<Label
-								Text="{Binding State}"
-								HorizontalOptions="End" />
                             <Label
-                                Text="{Binding Missions.Count}"
+                                Text="{Binding OrderProducts.Count, StringFormat='{0} Products'}"
+                                HorizontalOptions="StartAndExpand" />
+                            <Label
+                                Text="{Binding State}"
                                 HorizontalOptions="End" />
 						</StackLayout>
 					</StackLayout>
