@@ -30,8 +30,8 @@ namespace customerapp
          */
         public static string RedirectUrl =  "http://www.helin.ch/";
 
-        // public static string Server = "152.96.233.181:9000";
-	    public static string Server = "151.80.44.117:80"; // ifnotelse.com
+        public static string Server = "152.96.239.182:9000";
+	    // public static string Server = "151.80.44.117:80"; // ifnotelse.com
 
 		public static string ApiUrlBase = "http://" + Server;
         public static string ApiUrlListProducts = ApiUrlBase + "/api/products/?lat={0}&lon={1}";
@@ -47,6 +47,6 @@ namespace customerapp
 		public static string ApiUrlOrdersByCustomer = ApiUrlBase + "/api/orders/find-by-customer/{0}";
 		public static string ApiUrlMissionsByOrder = ApiUrlBase + "/api/missions/find-by-order/{0}";
 
-		public static string WsForDroneInfos = Server + "/api/missions/{0}/ws";
+        public static string WsForDroneInfos = "ws://" + Server + "/api/missions/{0}/ws";
     }
 }
