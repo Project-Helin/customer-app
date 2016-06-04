@@ -6,8 +6,8 @@
 	<StackLayout>
 		<ListView x:Name="ProductListView" RowHeight="60" VerticalOptions="FillAndExpand">
 			<ListView.ItemTemplate>
-				<DataTemplate >
-					<ViewCell>
+				<DataTemplate>
+					<ViewCell IsEnabled="{Binding IsEnabled}" >
 						<StackLayout
 							Orientation="Horizontal"
 							Padding="10">

@@ -42,8 +42,7 @@ namespace customerapp
             orderedProducts.Clear ();
             products.Clear ();
 
-            Button button = this.FindByName<Button> ("SendOrderButton");
-            button.IsEnabled = false;
+            SendOrderButton.IsEnabled = false;
 
             setTotalAmout (0);
         }
@@ -57,6 +56,7 @@ namespace customerapp
                     await App.Rest.GetAllProductsByLocation (customerPosition);
                 
                 foreach (Product each in productsFromServer) {
+                    each.IsEnabled = true;
                     products.Add (each);
                 }
             } 
@@ -75,9 +75,14 @@ namespace customerapp
 				
             var canSentOrder = selectedProduct.Amount > 0;
             if (canSentOrder) {
-				Button button = this.FindByName<Button> ("SendOrderButton");
-				button.IsEnabled = true;
+                SendOrderButton.IsEnabled = true;
 			}
+
+            foreach (Product each in products) {
+                var hasSameOrganisation = 
+                    each.Organisation.Id.Equals (selectedProduct.Organisation.Id);
+                each.IsEnabled = hasSameOrganisation;
+            }
 
 			updateTotalAmount ();
         }
@@ -88,8 +93,7 @@ namespace customerapp
 		}
 
 		private void setTotalAmout(decimal totalAmout){
-			Label totalAmountLabel = this.FindByName<Label> ("TotalAmount");
-			totalAmountLabel.Text = "Total: " + string.Format("{0:0.00}", totalAmout)  + " CHF";
+            TotalAmount.Text = "Total: " + string.Format("{0:0.00}", totalAmout)  + " CHF";
 		}
 
         async void OnOrderButtonClick(object sender, EventArgs args)
