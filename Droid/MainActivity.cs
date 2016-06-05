@@ -33,10 +33,7 @@ namespace customerapp.Droid
 
             Xamarin.FormsMaps.Init(this, bundle);
 
-            CrossPayPalManager.Init(new PayPalConfiguration(
-                    PayPalEnvironment.NoNetwork,
-                    "APP-80W284485P519543T"
-                )
+            CrossPayPalManager.Init(new PayPalConfiguration(PayPalEnvironment.NoNetwork, KeyConstants.PayPalEnvironmentId)
                 {
                     AcceptCreditCards = true,
                     //Your business name

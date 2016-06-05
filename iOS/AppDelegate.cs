@@ -20,10 +20,7 @@ namespace customerapp.iOS
 
             Xamarin.FormsMaps.Init();
 
-            CrossPayPalManager.Init(new PayPalConfiguration(
-                PayPalEnvironment.NoNetwork,
-                "APP-80W284485P519543T"
-            )
+            CrossPayPalManager.Init(new PayPalConfiguration(PayPalEnvironment.NoNetwork, KeyConstants.PayPalEnvironmentId )
                 {
                     AcceptCreditCards = true,
                     //Your business name
@@ -34,11 +31,10 @@ namespace customerapp.iOS
                     MerchantUserAgreementUri = "https://www.example.com/legal"
                 }
             );
-
-            LoadApplication(new App());
+                
             Websockets.Ios.WebsocketConnection.Link();
-
-
+            LoadApplication(new App());
+           
             return base.FinishedLaunching(app, options);
         }
     }
