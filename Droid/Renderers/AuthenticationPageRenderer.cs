@@ -32,8 +32,8 @@ namespace TodoAWSSimpleDB.Droid
 
                     // Initialize the object that communicates with the OAuth service
                     var auth = new OAuth2Authenticator(
-                        Constants.ClientId,
-                        Constants.ClientSecret,
+                        KeyConstants.ClientId,
+                        KeyConstants.ClientSecret,
                         Constants.Scope,
                         new Uri(Constants.AuthorizeUrl),
                         new Uri(Constants.RedirectUrl),

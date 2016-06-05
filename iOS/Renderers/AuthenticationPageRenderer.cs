@@ -32,11 +32,11 @@ namespace TodoAWSSimpleDB.iOS
 
                     // Initialize the object that communicates with the OAuth service
                     var auth = new OAuth2Authenticator(
-                        Constants.ClientId,
-                        Constants.ClientSecret,
+                        KeyConstants.ClientId,
+                        KeyConstants.ClientSecret,
                         Constants.Scope,
                         new Uri(Constants.AuthorizeUrl),
-                        new Uri(Constants.RedirectUrl), // TODO Kiru fix this
+                        new Uri(Constants.RedirectUrl), 
                         new Uri(Constants.AccessTokenUrl));
 
                     // Register an event handler for when the authentication process completes
@@ -50,7 +50,6 @@ namespace TodoAWSSimpleDB.iOS
             {
                 if (!isShown)
                 {
-//					App.Customer.Email = account.Username;
                     App.SuccessfulLoginAction.Invoke();					
                 }
             }
@@ -63,7 +62,6 @@ namespace TodoAWSSimpleDB.iOS
 				App.Customer = await App.Rest.GetCustomerInfo (e.Account);
 				App.Customer = await App.Rest.SaveCustomer (App.Customer);
 				Settings.SetCustomerId (App.Customer.Id);
-
             }
 			
             App.SuccessfulLoginAction.Invoke();
