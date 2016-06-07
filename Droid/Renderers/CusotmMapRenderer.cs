@@ -86,7 +86,8 @@ namespace MapOverlay.Droid
 
 
 			polylineOptions = new PolylineOptions ();
-			polylineOptions.InvokeColor (0x00E5FF00);
+            polylineOptions.InvokeColor (customerapp.Droid.Resource.Color.green);
+            polylineOptions.InvokeWidth(10);
 
 			foreach (var position in flownRoute) {
 				polylineOptions.Add (new LatLng (position.Lat, position.Lon));

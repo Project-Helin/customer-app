@@ -87,8 +87,10 @@ namespace customerapp
 
             var response = await DoGetRequestWithErrorHandling (Constants.ApiUrlMissionsByOrder, orderId);
 
+
             if (response != null && response.IsSuccessStatusCode) {
 				var content = await response.Content.ReadAsStringAsync ();
+                Debug.WriteLine (content);
                 UserDialogs.Instance.HideLoading ();
 
 				return Newtonsoft.Json.JsonConvert.DeserializeObject <List<Mission>> (content, jsonSetting);

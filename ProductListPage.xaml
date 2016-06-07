@@ -23,7 +23,6 @@
 								Text="CHF"
 								HorizontalOptions="End" />
 							<Label
-								FontSize="Medium"
 								TextColor="Blue"
 								Text="{Binding Amount}" />
 						</StackLayout>
